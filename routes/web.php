@@ -44,8 +44,11 @@ use App\Http\Controllers\form_layouts\VerticalForm;
 use App\Http\Controllers\form_layouts\HorizontalForm;
 use App\Http\Controllers\tables\Basic as TablesBasic;
 
+use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\ContactController;
+
 // Main Page Route
-Route::get('/', [Analytics::class, 'index'])->name('dashboard-analytics');
+Route::get('/admin', [Analytics::class, 'index'])->name('dashboard-analytics');
 
 // layout
 Route::get('/layouts/without-menu', [WithoutMenu::class, 'index'])->name('layouts-without-menu');
@@ -108,7 +111,7 @@ Route::get('/form/layouts-horizontal', [HorizontalForm::class, 'index'])->name('
 // tables
 Route::get('/tables/basic', [TablesBasic::class, 'index'])->name('tables-basic');
 
-Route::get('/navbar', function () {
+Route::get('/', function () {
     return view('user.page.index');
 })->name('navbar');
 
@@ -116,9 +119,7 @@ Route::get('/about', function () {
     return view('user.page.about');
 })->name('about');
 
-Route::get('/contact', function () {
-    return view('user.page.contact');
-})->name('contact');
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
 Route::get('/element', function () {
     return view('user.page.element');
@@ -131,3 +132,7 @@ Route::get('/portofolio', function () {
 Route::get('/single', function () {
     return view('user.page.single');
 })->name('single');
+
+
+Route::get('/contoh', [LandingPageController::class, 'index'])->name('landing');
+Route::post('/contact', [LandingPageController::class, 'storeContact'])->name('contact.store');

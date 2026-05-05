@@ -167,9 +167,10 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
 
 .site-nav {
   position: absolute;
+  background-color: #ea5757;
   top: 0;
-  left: 30px;
-  right: 30px;
+  left: 0;
+  right: 0;
   z-index: 99; }
 
 .menu-absolute {
@@ -179,6 +180,9 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
 .site-nav {
   padding-top: 20px;
   padding-bottom: 20px; }
+  .site-nav .logo {
+    margin-left: 50px; /* atur sesuai kebutuhan */
+}
   .site-nav h1 {
     margin: 0;
     padding: 0;
@@ -1515,7 +1519,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
   .hero-slant .container {
     position: relative; }
   .hero-slant, .hero-slant > .container > .row {
-    height: 120vh; }
+    height: 100vh; }
   .hero-slant .sign-up-form {
     padding: 10px;
     border-radius: 7px;

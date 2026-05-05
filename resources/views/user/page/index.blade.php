@@ -149,8 +149,7 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-7 mx-auto text-center">
-            <h2 class="text-white mb-4">Get this template for free! :)</h2>
-            <p class="mb-0"><a href="https://untree.co/" rel="noopener" class="btn btn-primary">Get it for free!</a></p>
+            <h2 class="text-white mb-4">Your image</h2>
           </div>
         </div>
       </div>
