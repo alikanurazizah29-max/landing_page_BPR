@@ -11,7 +11,15 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->alias([
+            'rbac'  => \App\Http\Middleware\RbacMiddleware::class,
+        ]);
+
+        // Redirect unauthenticated users to login page
+        $middleware->redirectGuestsTo('/login');
+
+        // Redirect authenticated users away from guest-only pages
+        $middleware->redirectUsersTo('/admin');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

@@ -1,6 +1,126 @@
 {
   "menu": [
     {
+      "url": "admin",
+      "name": "Dashboard BPR",
+      "icon": "menu-icon tf-icons mdi mdi-home-outline",
+      "slug": "dashboard-analytics"
+    },
+    {
+      "menuHeader": "Master Data"
+    },
+    {
+      "name": "Master Data",
+      "icon": "menu-icon tf-icons mdi mdi-database-cog-outline",
+      "slug": ["admin.master.menus", "admin.master.roles", "admin.master.role-permissions", "admin.master.users"],
+      "submenu": [
+        {
+          "url": "admin/master/menus",
+          "name": "Menu",
+          "slug": "admin.master.menus.index"
+        },
+        {
+          "url": "admin/master/roles",
+          "name": "Role",
+          "slug": "admin.master.roles.index"
+        },
+        {
+          "url": "admin/master/role-permissions",
+          "name": "Hak Akses",
+          "slug": "admin.master.role-permissions.index"
+        },
+        {
+          "url": "admin/master/users",
+          "name": "Pengguna",
+          "slug": "admin.master.users.index"
+        }
+      ]
+    },
+    {
+      "menuHeader": "Manajemen Data"
+    },
+    {
+      "name": "Katalog Produk",
+      "icon": "menu-icon tf-icons mdi mdi-package-variant-closed",
+      "slug": ["admin.products", "admin.benefits", "admin.interest-rates"],
+      "submenu": [
+        {
+          "url": "admin/products",
+          "name": "Daftar Produk",
+          "slug": "admin.products.index"
+        },
+        {
+          "url": "admin/benefits",
+          "name": "Keunggulan",
+          "slug": "admin.benefits.index"
+        },
+        {
+          "url": "admin/interest-rates",
+          "name": "Suku Bunga",
+          "slug": "admin.interest-rates.index"
+        }
+      ]
+    },
+    {
+      "name": "Publikasi",
+      "icon": "menu-icon tf-icons mdi mdi-newspaper-variant-outline",
+      "slug": ["admin.hero-banners", "admin.articles"],
+      "submenu": [
+        {
+          "url": "admin/hero-banners",
+          "name": "Hero Banners",
+          "slug": "admin.hero-banners.index"
+        },
+        {
+          "url": "admin/articles",
+          "name": "Berita & Artikel",
+          "slug": "admin.articles.index"
+        }
+      ]
+    },
+    {
+      "name": "Perusahaan",
+      "icon": "menu-icon tf-icons mdi mdi-domain",
+      "slug": ["admin.company-profiles", "admin.branches"],
+      "submenu": [
+        {
+          "url": "admin/company-profiles",
+          "name": "Profil Perusahaan",
+          "slug": "admin.company-profiles.index"
+        },
+        {
+          "url": "admin/branches",
+          "name": "Jaringan Kantor",
+          "slug": "admin.branches.index"
+        }
+      ]
+    },
+    {
+      "name": "Layanan Nasabah",
+      "icon": "menu-icon tf-icons mdi mdi-account-group-outline",
+      "slug": ["admin.contact-messages", "admin.testimonials", "admin.faqs"],
+      "submenu": [
+        {
+          "url": "admin/contact-messages",
+          "name": "Pesan Masuk",
+          "slug": "admin.contact-messages.index"
+        },
+        {
+          "url": "admin/testimonials",
+          "name": "Testimoni",
+          "slug": "admin.testimonials.index"
+        },
+        {
+          "url": "admin/faqs",
+          "name": "FAQ",
+          "slug": "admin.faqs.index"
+        }
+      ]
+    },
+    {
+      "menuHeader": "TEMPLATE REFERENSI"
+    },
+    {
       "url": "/",
       "name": "Dashboards",
       "icon": "menu-icon tf-icons mdi mdi-home-outline",

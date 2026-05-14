@@ -1,0 +1,40 @@
+@extends('layouts/contentNavbarLayout')
+@section('title', 'Edit Role')
+@section('content')
+<h4 class="py-3 mb-4"><span class="text-muted fw-light">Master Data / <a href="{{ route('admin.master.roles.index') }}">Role</a> /</span> Edit</h4>
+<div class="row"><div class="col-12">
+  <div class="card mb-4">
+    <h5 class="card-header">Form Edit Role</h5>
+    <div class="card-body">
+      <form id="ajaxForm" action="{{ route('admin.master.roles.update', $role->id) }}" method="POST">
+        @csrf
+        @method('PUT')
+        <div class="form-floating form-floating-outline mb-4">
+          <input type="text" class="form-control" id="code" name="code" value="{{ $role->code }}" placeholder="Kode Role" required />
+          <label for="code">Kode Role</label>
+        </div>
+        <div class="form-floating form-floating-outline mb-4">
+          <input type="text" class="form-control" id="name" name="name" value="{{ $role->name }}" placeholder="Nama Role" required />
+          <label for="name">Nama Role</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+        <a href="{{ route('admin.master.roles.index') }}" class="btn btn-outline-secondary">Batal</a>
+      </form>
+    </div>
+  </div>
+</div></div>
+@endsection
+@section('page-script')
+<script>
+document.getElementById('ajaxForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = this.querySelector('button[type="submit"]');
+    btn.disabled = true; btn.innerHTML = 'Menyimpan...';
+    try {
+        const res = await fetch(this.action, { method: 'POST', headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }, body: new FormData(this) });
+        const data = await res.json();
+        if (res.ok) { window.location.href = data.redirect; } else { console.error(data); alert(data.message || data.error); }
+    } catch(err) { console.error(err); } finally { btn.disabled = false; btn.innerHTML = 'Simpan Perubahan'; }
+});
+</script>
+@endsection

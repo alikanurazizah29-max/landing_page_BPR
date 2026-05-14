@@ -1,0 +1,67 @@
+@extends('layouts/contentNavbarLayout')
+@section('title', 'Edit Hak Akses')
+@section('content')
+<h4 class="py-3 mb-4"><span class="text-muted fw-light">Master Data / <a href="{{ route('admin.master.role-permissions.index') }}">Hak Akses</a> /</span> Edit</h4>
+<div class="row"><div class="col-12">
+  <div class="card mb-4">
+    <h5 class="card-header">Form Edit Hak Akses</h5>
+    <div class="card-body">
+      <form id="ajaxForm" action="{{ route('admin.master.role-permissions.update', $rolePermission->id) }}" method="POST">
+        @csrf
+        @method('PUT')
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-floating form-floating-outline mb-4">
+              <select class="form-select" id="role_id" name="role_id" required>
+                <option value="">Pilih Role</option>
+                @foreach($roles as $role)
+                <option value="{{ $role->id }}" {{ $rolePermission->role_id == $role->id ? 'selected' : '' }}>{{ $role->code }} — {{ $role->name }}</option>
+                @endforeach
+              </select>
+              <label for="role_id">Role</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-floating form-floating-outline mb-4">
+              <select class="form-select" id="menu_id" name="menu_id" required>
+                <option value="">Pilih Menu</option>
+                @foreach($menus as $menu)
+                <option value="{{ $menu->id }}" {{ $rolePermission->menu_id == $menu->id ? 'selected' : '' }}>{{ $menu->name }}</option>
+                @endforeach
+              </select>
+              <label for="menu_id">Menu</label>
+            </div>
+          </div>
+        </div>
+        <label class="form-label fw-semibold">Hak Akses</label>
+        <div class="row mb-4">
+          @foreach(['can_read' => 'Baca', 'can_create' => 'Tambah', 'can_update' => 'Ubah', 'can_delete' => 'Hapus', 'can_report' => 'Laporan'] as $key => $label)
+          <div class="col-auto">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="{{ $key }}" name="{{ $key }}" value="1" {{ $rolePermission->$key ? 'checked' : '' }} />
+              <label class="form-check-label" for="{{ $key }}">{{ $label }}</label>
+            </div>
+          </div>
+          @endforeach
+        </div>
+        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+        <a href="{{ route('admin.master.role-permissions.index') }}" class="btn btn-outline-secondary">Batal</a>
+      </form>
+    </div>
+  </div>
+</div></div>
+@endsection
+@section('page-script')
+<script>
+document.getElementById('ajaxForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = this.querySelector('button[type="submit"]');
+    btn.disabled = true; btn.innerHTML = 'Menyimpan...';
+    try {
+        const res = await fetch(this.action, { method: 'POST', headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }, body: new FormData(this) });
+        const data = await res.json();
+        if (res.ok) { window.location.href = data.redirect; } else { console.error(data); alert(data.message || data.error); }
+    } catch(err) { console.error(err); } finally { btn.disabled = false; btn.innerHTML = 'Simpan Perubahan'; }
+});
+</script>
+@endsection

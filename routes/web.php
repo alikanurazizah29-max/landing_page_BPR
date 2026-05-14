@@ -47,8 +47,38 @@ use App\Http\Controllers\tables\Basic as TablesBasic;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\ContactController;
 
-// Main Page Route
-Route::get('/admin', [Analytics::class, 'index'])->name('dashboard-analytics');
+// ─── Auth Routes ─────────────────────────────────────────────────────────────
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [\App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [\App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login.submit');
+});
+Route::post('/logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout')->middleware('auth');
+
+// ─── Dashboard ────────────────────────────────────────────────────────────────
+Route::get('/admin', [Analytics::class, 'index'])->name('dashboard-analytics')->middleware('auth');
+
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'rbac'])->group(function () {
+    Route::resource('products', \App\Http\Controllers\Admin\ProductController::class)->except(['show']);
+    Route::resource('benefits', \App\Http\Controllers\Admin\BenefitController::class)->except(['show']);
+    Route::resource('interest-rates', \App\Http\Controllers\Admin\InterestRateController::class)->except(['show']);
+    Route::resource('company-profiles', \App\Http\Controllers\Admin\CompanyProfileController::class)->except(['show']);
+    Route::resource('branches', \App\Http\Controllers\Admin\BranchController::class)->except(['show']);
+    Route::resource('hero-banners', \App\Http\Controllers\Admin\HeroBannerController::class)->except(['show']);
+    Route::resource('articles', \App\Http\Controllers\Admin\ArticleController::class)->except(['show']);
+    Route::resource('contact-messages', \App\Http\Controllers\Admin\ContactMessageController::class)->except(['show']);
+    Route::resource('testimonials', \App\Http\Controllers\Admin\TestimonialController::class)->except(['show']);
+    Route::resource('faqs', \App\Http\Controllers\Admin\FaqController::class)->except(['show']);
+
+    // Master Data
+    Route::prefix('master')->name('master.')->group(function () {
+        Route::resource('menus', \App\Http\Controllers\Admin\Master\MenuController::class)->except(['show']);
+        Route::resource('roles', \App\Http\Controllers\Admin\Master\RoleController::class)->except(['show']);
+        Route::resource('role-permissions', \App\Http\Controllers\Admin\Master\RolePermissionController::class)->only(['index', 'destroy']);
+        Route::get('role-permissions/{role}/manage', [\App\Http\Controllers\Admin\Master\RolePermissionController::class, 'manage'])->name('role-permissions.manage');
+        Route::post('role-permissions/{role}/save', [\App\Http\Controllers\Admin\Master\RolePermissionController::class, 'save'])->name('role-permissions.save');
+        Route::resource('users', \App\Http\Controllers\Admin\Master\UserController::class)->except(['show']);
+    });
+});
 
 // layout
 Route::get('/layouts/without-menu', [WithoutMenu::class, 'index'])->name('layouts-without-menu');
