@@ -68,7 +68,7 @@
     });
 
     $('.btn-delete').on('click', async function() {
-        if(confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+        if (await window.confirmDelete()) {
             const url = $(this).data('url');
             try {
                 const response = await fetch(url, {
@@ -78,13 +78,11 @@
                         'Accept': 'application/json'
                     }
                 });
-                if(response.ok) {
-                    window.location.reload();
-                } else {
-                    console.error('Delete failed:', await response.text());
+                if(response.ok) { sessionStorage.setItem('flash_message', 'Berhasil menghapus data.'); window.location.reload(); } else {
+                    console.error('Delete failed:', await response.text()); showAlert('error', 'Gagal menghapus data.');
                 }
             } catch(e) {
-                console.error('Error:', e);
+                console.error('Error:', e); showAlert('error', 'Terjadi kesalahan sistem.');
             }
         }
     });

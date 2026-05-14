@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Article;
 
 class ArticleController extends Controller
@@ -32,7 +33,7 @@ class ArticleController extends Controller
                 'category' => 'nullable|string|max:255',
                 'excerpt' => 'nullable|string',
                 'content' => 'required|string',
-                'image_path' => 'nullable|image|max:2048',
+                'image_path' => 'nullable|image|max:1024',
                 'is_published' => 'nullable'
             ]);
             
@@ -72,11 +73,15 @@ class ArticleController extends Controller
                 'category' => 'nullable|string|max:255',
                 'excerpt' => 'nullable|string',
                 'content' => 'required|string',
-                'image_path' => 'nullable|image|max:2048',
+                'image_path' => 'nullable|image|max:1024',
                 'is_published' => 'nullable'
             ]);
             
             if ($request->hasFile('image_path')) {
+                // Hapus file lama jika ada
+                if ($article->image_path && Storage::disk('public')->exists($article->image_path)) {
+                    Storage::disk('public')->delete($article->image_path);
+                }
                 $validated['image_path'] = $request->file('image_path')->store('uploads/articles', 'public');
             }
             
@@ -101,6 +106,10 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         try {
+            // Hapus file fisik
+            if ($article->image_path && Storage::disk('public')->exists($article->image_path)) {
+                Storage::disk('public')->delete($article->image_path);
+            }
             $article->delete();
             return response()->json([
                 'success' => true, 

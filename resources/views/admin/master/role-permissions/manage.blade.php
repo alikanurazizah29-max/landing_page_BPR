@@ -62,14 +62,33 @@
               </thead>
               <tbody>
                 @foreach($rootMenus as $parent)
-                {{-- ── Baris Parent (header grup, tidak ada checkbox) ── --}}
+                {{-- ── Baris Parent ── --}}
                 <tr class="table-light">
-                  <td class="ps-0" colspan="{{ count($permLabels) + 1 }}">
+                  <td class="ps-0" {{ !$parent->path ? 'colspan=' . (count($permLabels) + 1) : '' }}>
                     <span class="fw-bold text-dark">
                       @if($parent->icon)<i class="{{ $parent->icon }} me-1 text-primary"></i>@endif
                       {{ $parent->name }}
                     </span>
+                    @if($parent->path)
+                      <br><small class="text-muted ms-4"><code>{{ $parent->path }}</code></small>
+                    @endif
                   </td>
+                  @if($parent->path)
+                    @php $parentPerm = $existingPermissions[$parent->id] ?? null; @endphp
+                    @foreach($permLabels as $permKey => $permLabel)
+                    <td class="text-center">
+                      <div class="perm-checkbox-wrap d-inline-flex align-items-center justify-content-center"
+                           style="width: 32px; height: 32px; border-radius: 6px; cursor: pointer; border: 2px solid #e0e0e0; transition: all .2s;"
+                           onclick="toggleCheck(this)">
+                        <input type="checkbox"
+                               name="{{ $permKey }}_{{ $parent->id }}"
+                               class="perm-checkbox d-none"
+                               {{ ($parentPerm && $parentPerm->$permKey) ? 'checked' : '' }} />
+                        <i class="mdi mdi-check fs-5" style="display: {{ ($parentPerm && $parentPerm->$permKey) ? 'block' : 'none' }};"></i>
+                      </div>
+                    </td>
+                    @endforeach
+                  @endif
                 </tr>
 
                 {{-- ── Baris Child (dengan checkbox) ── --}}
@@ -191,10 +210,11 @@ document.getElementById('permissionForm')?.addEventListener('submit', async func
         const data = await res.json();
 
         if (res.ok) {
-            window.location.href = data.redirect;
+            sessionStorage.setItem('flash_message', data.message || 'Hak akses berhasil disimpan.');
+            window.location.href = '{{ route("admin.master.role-permissions.index") }}';
         } else {
             console.error('Error:', data);
-            alert(data.message || data.error || 'Terjadi kesalahan.');
+            showAlert('error', 'Gagal menyimpan hak akses.');
         }
     } catch (err) {
         console.error('Network Error:', err);

@@ -75,6 +75,15 @@ document.addEventListener("DOMContentLoaded", function() {
         showAlert('success', flashMsg);
         sessionStorage.removeItem('flash_message');
     }
+    
+    // Set global default for DataTables if it is loaded
+    if ($.fn.dataTable) {
+        $.extend(true, $.fn.dataTable.defaults, {
+            dom: "<'row mb-3'<'col-sm-12 col-md-6 d-flex align-items-center justify-content-start'f><'col-sm-12 col-md-6 d-flex justify-content-end'>>" +
+                 "<'row'<'col-sm-12'tr>>" +
+                 "<'row mt-3'<'col-sm-12 col-md-4 d-flex align-items-center'l><'col-sm-12 col-md-4 d-flex justify-content-center'i><'col-sm-12 col-md-4 d-flex justify-content-end'p>>"
+        });
+    }
 });
 </script>
 <!-- Pricing Modal JS-->

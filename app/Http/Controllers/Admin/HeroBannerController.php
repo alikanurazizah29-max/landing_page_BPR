@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\HeroBanner;
 
 class HeroBannerController extends Controller
@@ -29,7 +30,7 @@ class HeroBannerController extends Controller
             $validated = $request->validate([
                 'title' => 'required|string|max:255',
                 'subtitle' => 'nullable|string|max:255',
-                'image_path' => 'nullable|image|max:2048',
+                'image_path' => 'nullable|image|max:1024',
                 'button_text' => 'nullable|string|max:255',
                 'button_url' => 'nullable|string',
                 'order' => 'required|integer',
@@ -69,7 +70,7 @@ class HeroBannerController extends Controller
             $validated = $request->validate([
                 'title' => 'required|string|max:255',
                 'subtitle' => 'nullable|string|max:255',
-                'image_path' => 'nullable|image|max:2048',
+                'image_path' => 'nullable|image|max:1024',
                 'button_text' => 'nullable|string|max:255',
                 'button_url' => 'nullable|string',
                 'order' => 'required|integer',
@@ -77,6 +78,10 @@ class HeroBannerController extends Controller
             ]);
             
             if ($request->hasFile('image_path')) {
+                // Hapus file lama jika ada
+                if ($heroBanner->image_path && Storage::disk('public')->exists($heroBanner->image_path)) {
+                    Storage::disk('public')->delete($heroBanner->image_path);
+                }
                 $validated['image_path'] = $request->file('image_path')->store('uploads/hero-banners', 'public');
             }
             
@@ -101,6 +106,10 @@ class HeroBannerController extends Controller
     public function destroy(HeroBanner $heroBanner)
     {
         try {
+            // Hapus file fisik
+            if ($heroBanner->image_path && Storage::disk('public')->exists($heroBanner->image_path)) {
+                Storage::disk('public')->delete($heroBanner->image_path);
+            }
             $heroBanner->delete();
             return response()->json([
                 'success' => true, 

@@ -65,10 +65,11 @@ document.getElementById('ajaxForm').addEventListener('submit', async function(e)
         const data = await response.json();
         
         if (response.ok) {
+            sessionStorage.setItem('flash_message', data.message || 'Data berhasil disimpan.');
             window.location.href = data.redirect;
         } else {
             console.error('Validation/Server Error:', data);
-            alert('Gagal: ' + (data.message || data.error || 'Terjadi kesalahan'));
+            showAlert('error', 'Gagal menyimpan data.');
         }
     } catch(err) {
         console.error('Network Error:', err);
