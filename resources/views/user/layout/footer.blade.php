@@ -41,7 +41,7 @@
                                  <ul class="links list-unstyled">
                                      <li><a href="#">Press</a></li>
                                      <li><a href="#">Blog</a></li>
-                                     <li><a href="{{ route('contact') }}">Contact</a></li>
+                                     <li><a href="#">Contact</a></li>
                                      <li><a href="#">Support</a></li>
                                      <li><a href="#">Privacy</a></li>
                                  </ul>

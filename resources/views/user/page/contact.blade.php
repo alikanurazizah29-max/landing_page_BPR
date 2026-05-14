@@ -86,11 +86,7 @@
                                  </div> <!-- /.service -->
                              </div>
                          </div>
-                         @if (session('success'))
-                             <div class="alert alert-success">{{ session('success') }}</div>
-                         @endif
-                         <form action="{{ route('contact.store') }}" method="POST">
-                             @csrf
+                         <form>
                              <div class="row">
                                  <div class="col-6">
                                      <div class="form-group">
@@ -123,18 +119,9 @@
                          </form>
 
                      </div>
-
-
-
-
-
                  </div>
-
              </div>
-
          </div>
-
-
      </div>
 
      <div class="site-section">
