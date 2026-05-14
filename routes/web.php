@@ -149,7 +149,9 @@ Route::get('/about', function () {
     return view('user.page.about');
 })->name('about');
 
-Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::get('/contact', function () {
+    return view('user.page.contact');
+});
 
 Route::get('/element', function () {
     return view('user.page.element');
@@ -162,7 +164,3 @@ Route::get('/portofolio', function () {
 Route::get('/single', function () {
     return view('user.page.single');
 })->name('single');
-
-
-Route::get('/contoh', [LandingPageController::class, 'index'])->name('landing');
-Route::post('/contact', [LandingPageController::class, 'storeContact'])->name('contact.store');

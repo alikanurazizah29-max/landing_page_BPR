@@ -26,7 +26,7 @@
                                <li><a href="portfolio.html">Portfolio</a></li>
                                <li><a href="single.html">Single</a></li>
                                <li><a href="about.html">About</a></li>
-                               <li><a href="{{ route('contact') }}">Contact</a></li>
+                               <li><a href="contact.html">Contact</a></li>
 
                                <li class="has-children">
                                    <a href="#">Menu Two</a>
@@ -40,7 +40,7 @@
                            </ul>
                        </li>
                        <li><a href="elements.html">Elements</a></li>
-                       <li><a href="{{ route('contact') }}">Contact us</a></li>
+                       <li><a href="contact.html">Contact us</a></li>
                    </ul>
 
                    <a href="#" class="burger light ml-auto site-menu-toggle js-menu-toggle d-block d-lg-none"
