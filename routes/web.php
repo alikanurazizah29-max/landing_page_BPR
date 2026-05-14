@@ -46,6 +46,7 @@ use App\Http\Controllers\tables\Basic as TablesBasic;
 
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\ContactController;
+use App\Models\Product;
 
 // ─── Auth Routes ─────────────────────────────────────────────────────────────
 Route::middleware('guest')->group(function () {
@@ -142,7 +143,8 @@ Route::get('/form/layouts-horizontal', [HorizontalForm::class, 'index'])->name('
 Route::get('/tables/basic', [TablesBasic::class, 'index'])->name('tables-basic');
 
 Route::get('/', function () {
-    return view('user.page.index');
+    $dataProduk = Product::all();
+    return view('user.page.index', compact('dataProduk'));
 })->name('navbar');
 
 Route::get('/about', function () {

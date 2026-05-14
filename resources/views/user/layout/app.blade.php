@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="{{ asset('user/css/jquery.fancybox.min.css') }}">
   <link rel="stylesheet" href="{{ asset('user/css/aos.css') }}">
   <link rel="stylesheet" href="{{ asset('user/css/style.css') }}">
+  <link rel="stylesheet" href="{{ asset('user/css/custom.css') }}">
 
   <title>@yield('title', 'BPR | Home')</title>
 </head>

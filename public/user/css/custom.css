@@ -1,0 +1,29 @@
+.hero-image{
+    height: 100vh;
+    object-fit: cover;
+
+    border-top-right-radius: 250px;
+    border-bottom-right-radius: 250px;
+
+    position: relative;
+    z-index: 2;
+}
+
+/* WARNA DI BELAKANG IMAGE */
+.hero-bg{
+    position: absolute;
+
+    top: 0;
+    right: 0;
+
+    width: 50%;
+    height: 100%;
+
+    background: #0d1b52;
+
+    z-index: 1;
+}
+
+.hero-text-box{
+    background: #0d1b52;
+}
