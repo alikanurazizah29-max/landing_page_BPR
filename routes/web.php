@@ -43,9 +43,6 @@ use App\Http\Controllers\form_elements\InputGroups;
 use App\Http\Controllers\form_layouts\VerticalForm;
 use App\Http\Controllers\form_layouts\HorizontalForm;
 use App\Http\Controllers\tables\Basic as TablesBasic;
-
-use App\Http\Controllers\LandingPageController;
-use App\Http\Controllers\ContactController;
 use App\Models\Product;
 
 // ─── Auth Routes ─────────────────────────────────────────────────────────────
@@ -153,7 +150,7 @@ Route::get('/about', function () {
 
 Route::get('/contact', function () {
     return view('user.page.contact');
-});
+})->name('contact');
 
 Route::get('/element', function () {
     return view('user.page.element');
