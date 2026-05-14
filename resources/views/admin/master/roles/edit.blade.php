@@ -33,7 +33,7 @@ document.getElementById('ajaxForm').addEventListener('submit', async function(e)
     try {
         const res = await fetch(this.action, { method: 'POST', headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }, body: new FormData(this) });
         const data = await res.json();
-        if (res.ok) { sessionStorage.setItem('flash_message', data.message); window.location.href = data.redirect; } else { console.error(data); console.error(data.message || data.error); showAlert('error', 'Gagal menyimpan data.'); }
+        if (res.ok) { sessionStorage.setItem('flash_message', data.message); sessionStorage.setItem('flash_message', data.message || 'Data berhasil disimpan.'); window.location.href = data.redirect; } else { console.error(data); console.error(data.message || data.error); showAlert('error', 'Gagal menyimpan data.'); }
     } catch(err) { console.error(err); } finally { btn.disabled = false; btn.innerHTML = 'Simpan Perubahan'; }
 });
 </script>

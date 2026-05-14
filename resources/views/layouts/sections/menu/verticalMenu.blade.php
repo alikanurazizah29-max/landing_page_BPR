@@ -32,25 +32,43 @@
     {{-- active menu method --}}
     @php
       $activeClass = null;
-      $currentRouteName =  Route::currentRouteName();
+      $currentRouteName = Route::currentRouteName();
+      $currentPath     = ltrim(request()->path(), '/');
+      $menuSlug        = $menu->slug ?? null;
 
-      if ($currentRouteName === $menu->slug) {
+      // Cek aktif via slug (menu JSON)
+      if ($menuSlug && $currentRouteName === $menuSlug) {
           $activeClass = 'active';
       }
+      // Cek aktif via URL path (menu DB)
+      elseif (isset($menu->url) && ltrim($menu->url, '/') === $currentPath) {
+          $activeClass = 'active';
+      }
+      // Cek submenu aktif
       elseif (isset($menu->submenu)) {
-        if (gettype($menu->slug) === 'array') {
-          foreach($menu->slug as $slug){
-            if (str_contains($currentRouteName,$slug) and strpos($currentRouteName,$slug) === 0) {
+        // Via slug
+        if ($menuSlug) {
+          if (gettype($menuSlug) === 'array') {
+            foreach($menuSlug as $slug){
+              if (str_contains($currentRouteName, $slug) and strpos($currentRouteName, $slug) === 0) {
+                $activeClass = 'active open';
+              }
+            }
+          } else {
+            if (str_contains($currentRouteName, $menuSlug) and strpos($currentRouteName, $menuSlug) === 0) {
               $activeClass = 'active open';
             }
           }
         }
-        else{
-          if (str_contains($currentRouteName,$menu->slug) and strpos($currentRouteName,$menu->slug) === 0) {
-            $activeClass = 'active open';
+        // Via URL path — cek apakah ada child yang URL-nya cocok
+        if (!$activeClass) {
+          foreach ($menu->submenu as $child) {
+            if (isset($child->url) && ltrim($child->url, '/') === $currentPath) {
+              $activeClass = 'active open';
+              break;
+            }
           }
         }
-
       }
     @endphp
 

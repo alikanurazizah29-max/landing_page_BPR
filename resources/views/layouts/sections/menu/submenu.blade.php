@@ -7,20 +7,28 @@
       $activeClass = null;
       $active = 'active open';
       $currentRouteName = Route::currentRouteName();
+      $currentPath  = ltrim(request()->path(), '/');
+      $submenuSlug  = $submenu->slug ?? null;
 
-      if ($currentRouteName === $submenu->slug) {
+      // Cek aktif via slug (menu JSON)
+      if ($submenuSlug && $currentRouteName === $submenuSlug) {
           $activeClass = 'active';
       }
-      elseif (isset($submenu->submenu)) {
-        if (gettype($submenu->slug) === 'array') {
-          foreach($submenu->slug as $slug){
+      // Cek aktif via URL path (menu DB)
+      elseif (isset($submenu->url) && ltrim($submenu->url, '/') === $currentPath) {
+          $activeClass = 'active';
+      }
+      // Cek nested submenu
+      elseif (isset($submenu->submenu) && $submenuSlug) {
+        if (gettype($submenuSlug) === 'array') {
+          foreach($submenuSlug as $slug){
             if (str_contains($currentRouteName,$slug) and strpos($currentRouteName,$slug) === 0) {
                 $activeClass = $active;
             }
           }
         }
         else{
-          if (str_contains($currentRouteName,$submenu->slug) and strpos($currentRouteName,$submenu->slug) === 0) {
+          if (str_contains($currentRouteName,$submenuSlug) and strpos($currentRouteName,$submenuSlug) === 0) {
             $activeClass = $active;
           }
         }

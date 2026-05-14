@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\CompanyProfile;
 
 class CompanyProfileController extends Controller
@@ -30,7 +31,7 @@ class CompanyProfileController extends Controller
                 'title' => 'required|string|max:255',
                 'type' => 'required|string|max:255',
                 'content' => 'required|string',
-                'image_path' => 'nullable|image|max:2048'
+                'image_path' => 'nullable|image|max:1024'
             ]);
             
             if ($request->hasFile('image_path')) {
@@ -66,10 +67,14 @@ class CompanyProfileController extends Controller
                 'title' => 'required|string|max:255',
                 'type' => 'required|string|max:255',
                 'content' => 'required|string',
-                'image_path' => 'nullable|image|max:2048'
+                'image_path' => 'nullable|image|max:1024'
             ]);
             
             if ($request->hasFile('image_path')) {
+                // Hapus file lama jika ada
+                if ($companyProfile->image_path && Storage::disk('public')->exists($companyProfile->image_path)) {
+                    Storage::disk('public')->delete($companyProfile->image_path);
+                }
                 $validated['image_path'] = $request->file('image_path')->store('uploads/company-profiles', 'public');
             }
             
@@ -93,6 +98,10 @@ class CompanyProfileController extends Controller
     public function destroy(CompanyProfile $companyProfile)
     {
         try {
+            // Hapus file fisik
+            if ($companyProfile->image_path && Storage::disk('public')->exists($companyProfile->image_path)) {
+                Storage::disk('public')->delete($companyProfile->image_path);
+            }
             $companyProfile->delete();
             return response()->json([
                 'success' => true, 
