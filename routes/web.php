@@ -150,7 +150,7 @@ Route::get('/about', function () {
 
 Route::get('/contact', function () {
     return view('user.page.contact');
-});
+})->name('contact');
 
 Route::get('/element', function () {
     return view('user.page.element');
