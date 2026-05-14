@@ -44,9 +44,9 @@
 $(document).ready(function() {
     $('#dataTable').DataTable({ language: { url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/id.json' }, order: [], columnDefs: [{ orderable: false, targets: [0, 3] }] });
     $('.btn-delete').on('click', async function() {
-        if (!confirm('Hapus role ini?')) return;
+        if (!(await window.confirmDelete())) return;
         const res = await fetch($(this).data('url'), { method: 'DELETE', headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}', 'Accept': 'application/json' } });
-        res.ok ? location.reload() : console.error(await res.text());
+        if (res.ok) { sessionStorage.setItem('flash_message', 'Berhasil menghapus data.'); location.reload(); } else { console.error('Delete failed:', res.statusText); showAlert('error', 'Gagal menghapus data.'); }
     });
 });
 </script>

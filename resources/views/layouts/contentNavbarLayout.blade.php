@@ -45,6 +45,28 @@ $container = ($container ?? 'container-xxl');
           <div class="{{$container}} flex-grow-1 container-p-y">
             @endif
 
+            <!-- Global Delete Confirmation Modal -->
+            <div class="modal fade" id="globalDeleteModal" tabindex="-1" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title"><i class="mdi mdi-alert-circle-outline text-danger me-2"></i>Konfirmasi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body text-center">
+                    <p class="mb-0">Apakah Anda yakin ingin menghapus data ini?<br><small class="text-muted">Tindakan ini tidak dapat dibatalkan.</small></p>
+                  </div>
+                  <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-danger" id="globalDeleteConfirmBtn">Ya, Hapus</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {{-- Global Alert Container --}}
+            <div id="global-alert-container"></div>
+
             @yield('content')
 
           </div>

@@ -76,6 +76,14 @@ class MenuServiceProvider extends ServiceProvider
             // Menu dengan URL — cek apakah path ada di allowedPaths
             if (isset($item->url)) {
                 $itemPath = ltrim($item->url, '/');
+                
+                // Dashboard ("admin") atau referensi template (bukan "admin/...") tetap ditampilkan
+                if ($itemPath === 'admin' || !str_starts_with($itemPath, 'admin/')) {
+                    $filtered[] = $item;
+                    continue;
+                }
+
+                // Menu sistem (admin/*) wajib lolos cek can_read dari database
                 if (in_array($itemPath, $allowedPaths)) {
                     $filtered[] = $item;
                 }

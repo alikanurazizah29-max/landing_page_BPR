@@ -70,12 +70,12 @@ $(document).ready(function() {
     });
 
     $('.btn-reset').on('click', async function() {
-        if (!confirm('Reset SEMUA hak akses untuk role ini? Tindakan ini tidak dapat dibatalkan.')) return;
+        if (!(await window.confirmDelete())) return;
         const res = await fetch($(this).data('url'), {
             method: 'DELETE',
             headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}', 'Accept': 'application/json' }
         });
-        res.ok ? location.reload() : console.error(await res.text());
+        if (res.ok) { sessionStorage.setItem('flash_message', 'Berhasil menghapus data.'); location.reload(); } else { console.error('Delete failed:', res.statusText); showAlert('error', 'Gagal menghapus data.'); }
     });
 });
 </script>

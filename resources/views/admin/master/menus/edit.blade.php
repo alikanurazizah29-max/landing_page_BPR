@@ -18,10 +18,6 @@
           <label for="path">Path / URL</label>
         </div>
         <div class="form-floating form-floating-outline mb-4">
-          <input type="text" class="form-control" id="permission_path" name="permission_path" value="{{ $menu->permission_path }}" placeholder="Permission path" />
-          <label for="permission_path">Permission Path</label>
-        </div>
-        <div class="form-floating form-floating-outline mb-4">
           <input type="text" class="form-control" id="icon" name="icon" value="{{ $menu->icon }}" placeholder="mdi mdi-home-outline" />
           <label for="icon">Icon Class (MDI)</label>
         </div>
@@ -50,7 +46,7 @@ document.getElementById('ajaxForm').addEventListener('submit', async function(e)
     try {
         const res = await fetch(this.action, { method: 'POST', headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }, body: new FormData(this) });
         const data = await res.json();
-        if (res.ok) { window.location.href = data.redirect; } else { console.error(data); alert(data.message || data.error); }
+        if (res.ok) { sessionStorage.setItem('flash_message', data.message); window.location.href = data.redirect; } else { console.error(data); console.error(data.message || data.error); showAlert('error', 'Gagal menyimpan data.'); }
     } catch(err) { console.error(err); } finally { btn.disabled = false; btn.innerHTML = 'Simpan Perubahan'; }
 });
 </script>

@@ -30,7 +30,6 @@ class MenuController extends Controller
             $validated = $request->validate([
                 'name'            => 'required|string|max:255',
                 'path'            => 'nullable|string|max:255',
-                'permission_path' => 'nullable|string|max:255',
                 'icon'            => 'nullable|string|max:255',
                 'parent_id'       => 'nullable|exists:menus,id',
             ]);
@@ -60,7 +59,6 @@ class MenuController extends Controller
             $validated = $request->validate([
                 'name'            => 'required|string|max:255',
                 'path'            => 'nullable|string|max:255',
-                'permission_path' => 'nullable|string|max:255',
                 'icon'            => 'nullable|string|max:255',
                 'parent_id'       => 'nullable|exists:menus,id',
             ]);
