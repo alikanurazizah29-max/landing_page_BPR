@@ -1,6 +1,100 @@
 @extends('user.layout.app')
 @section('title', 'BPR | Home')
 @section('content')
+    <style>
+        .hero-image-curve {
+            width: 80%;
+            height: 100vh;
+            object-fit: cover;
+
+            /* Lengkungan kanan */
+            border-top-right-radius: 105% 50%;
+            border-bottom-right-radius: 105% 50%;
+
+            overflow: hidden;
+        }
+
+        .hero-text-box {
+            background: #111a63;
+            min-height: 100vh;
+        }
+
+        .feature-card {
+            position: relative;
+            padding: 40px 30px 30px;
+            border-radius: 22px;
+            color: white;
+            min-height: 240px;
+            margin: 0px 20px;
+
+            transition: 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-light {
+            background: #ef6b3b;
+        }
+
+        .feature-dark {
+            background: #cc4e0f;
+        }
+
+        .feature-icon {
+            position: absolute;
+            top: 20px;
+            left: -25px;
+
+            width: 50px;
+            height: 50px;
+
+            border-radius: 50%;
+            background: #fff3e8;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 6px solid #f7f7f7;
+        }
+
+        .feature-icon span {
+            font-size: 24px;
+            color: #cc4e0f;
+        }
+
+        .feature-card h4 {
+            margin-top: 10px;
+            margin-bottom: 20px;
+
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+        }
+
+        .feature-card a {
+            display: inline-block;
+            margin-top: 20px;
+
+            color: white;
+            font-weight: 600;
+        }
+
+        .feature-shift-top {
+            margin-top: 60px;
+        }
+
+        .feature-shift-bottom {
+            margin-top: -60px;
+        }
+    </style>
 
     <div class="hero-slant overlay" data-stellar-background-ratio="0.5"
         style="background-image: url(&quot;{{ asset('user/images/hero-min.jpg') }}&quot;)">
@@ -83,211 +177,135 @@
                         </div>
                     </div>
                 @endforeach
-                {{-- <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up" data-aos-delay="100">
-            <div class="unit-4 d-flex">
-              <div class="unit-4-icon mr-4">
-                <span class="feather-layers"></span>
-              </div>
-              <div>
-                <h3>High Performance</h3>
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-                <p><a href="#">Learn More</a></p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up" data-aos-delay="200">
-            <div class="unit-4 d-flex">
-              <div class="unit-4-icon mr-4">
-                <span class="feather-layout"></span>
-              </div>
-              <div>
-                <h3>Flexible Layout</h3>
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-                <p><a href="#">Learn More</a></p>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up" data-aos-delay="300">
-            <div class="unit-4 d-flex">
-              <div class="unit-4-icon mr-4">
-                <span class="feather-life-buoy"></span>
-              </div>
-              <div>
-                <h3>Free Support</h3>
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-                <p><a href="#">Learn More</a></p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up" data-aos-delay="400">
-            <div class="unit-4 d-flex">
-              <div class="unit-4-icon mr-4">
-                <span class="feather-shopping-bag"></span>
-              </div>
-              <div>
-                <h3>Cool Pricing</h3>
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-                <p><a href="#">Learn More</a></p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up" data-aos-delay="500">
-            <div class="unit-4 d-flex">
-              <div class="unit-4-icon mr-4">
-                <span class="feather-smartphone"></span>
-              </div>
-              <div>
-                <h3>Mobile Apps</h3>
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-                <p><a href="#">Learn More</a></p>
-              </div>
-            </div>
-          </div> --}}
-
             </div>
         </div>
     </div>
 
 
     <div class="container-fluid overflow-hidden">
-        <div class="row h-100 g-0">
+        <div class="row h-100 g-5" style="background: rgb(255, 255, 255)">
 
             <!-- IMAGE -->
-            <div class="col-lg-6 p-0 position-relative">
+            <div class="col-lg-4 p-0 position-relative hero-image-wrapper">
 
-                <div class="hero-bg"></div>
-
-                <img src="{{ asset('user/images/img_v_3-min.jpg') }}" class="hero-image w-100 h-80">
+                <img src="{{ asset('user/images/img_v_3-min.jpg') }}" class="hero-image-curve">
 
             </div>
 
             <!-- TEXT -->
-            <div class="col-lg-6 hero-text-box d-flex align-items-center">
+            <div class="col-lg-6 d-flex align-items-center" style="margin-inline-start: 80px">
 
-                <div class="text-white px-5">
-                    <h1 class="display-4 fw-bold text-white">
-                        Your image
-                    </h1>
 
-                    <p class="text-white-50 mt-3">
-                        A small river named Duden flows by their place
-                        and supplies it with the necessary regelialia.
-                    </p>
+                <div class="row g-5">
+
+                    <!-- CARD 1 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="feature-card feature-light">
+
+                            <div class="feature-icon">
+                                <span class="icon-briefcase"></span>
+                            </div>
+
+                            <h4>Banking Info</h4>
+
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                            </p>
+
+                            <a href="#">Read More</a>
+
+                        </div>
+                    </div>
+
+                    <!-- CARD 2 -->
+                    <div class="col-md-6 mb-4 feature-shift-top">
+                        <div class="feature-card feature-dark">
+
+                            <div class="feature-icon">
+                                <span class="icon-shield"></span>
+                            </div>
+
+                            <h4>Finance & Risk</h4>
+
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                            </p>
+
+                            <a href="#">Read More</a>
+
+                        </div>
+                    </div>
+
+                    <!-- CARD 3 -->
+                    <div class="col-md-6 mb-4 feature-shift-bottom">
+                        <div class="feature-card feature-dark">
+
+                            <div class="feature-icon">
+                                <span class="icon-lock"></span>
+                            </div>
+
+                            <h4>Safe & Secure</h4>
+
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                            </p>
+
+                            <a href="#">Read More</a>
+
+                        </div>
+                    </div>
+
+                    <!-- CARD 4 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="feature-card feature-light">
+
+                            <div class="feature-icon">
+                                <span class="icon-home"></span>
+                            </div>
+
+                            <h4>Fast Loan</h4>
+
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                            </p>
+
+                            <a href="#">Read More</a>
+
+                        </div>
+                    </div>
                 </div>
-
             </div>
-
         </div>
     </div>
-
-
-    <!--<div class="features-lg ">
-                                        <div class="container">
-                                            <div class="row feature align-items-center justify-content-between">
-                                                <div class="col-lg-7 section-stack order-lg-2 mb-4 mb-lg-0 position-relative" data-aos="fade-up"
-                                                    data-aos-delay="0">
-
-                                                    <div class="image-stack">
-                                                        <div class="image-stack__item image-stack__item--top">
-                                                            <img src="{{ asset('user/images/img_h_2-min.jpg') }}" alt="">
-                                                        </div>
-                                                        <div class="image-stack__item image-stack__item--bottom">
-                                                            <img src="{{ asset('user/images/img_h_3-min.jpg') }}" alt="">
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                                <div class="col-lg-4 section-title" data-aos="fade-up" data-aos-delay="100">
-
-                                                    <h2 class="font-weight-bold mb-4 heading">Far far away, behind the word mountains</h2>
-                                                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and
-                                                        Consonantia, there live the blind texts. Separated they live.</p>
-                                                    <p><a href="#" class="btn btn-primary">Get Started</a></p>
-
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>-->
-
-    <!--<div class="features-lg">
-                                        <div class="container">
-
-                                            <div class="row feature align-items-center justify-content-between">
-                                                <div class="col-lg-7 mb-4 mb-lg-0 section-stack" data-aos="fade-up" data-aos-delay="0">
-                                                    <img src="{{ asset('user/images/img_h_5-min.jpg') }}" alt="Image" class="img-fluid">
-                                                </div>
-                                                <div class="col-lg-4 section-title" data-aos="fade-up" data-aos-delay="100">
-
-                                                    <h2 class="font-weight-bold mb-4">Far far away, behind the word mountains</h2>
-                                                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and
-                                                        Consonantia, there live the blind texts. Separated they live.</p>
-                                                    <p><a href="#" class="btn btn-primary">Get Started</a></p>
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-                                    </div>-->
 
     <div class="site-section bg-light" id="blog-section">
         <div class="container">
             <div class="row">
                 <div class="col-7 mb-4 position-relative text-center mx-auto">
                     <h2 class="font-weight-bold text-center">Our Blog Posts</h2>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live
-                        the blind texts.</p>
+                    <p>Ini adalah semua artikel yang saya buat</p>
                 </div>
 
             </div>
             <div class="row">
 
 
-
-                <div class="col-md-6 mb-5 mb-lg-0 col-lg-4">
-                    <div class="blog_entry">
-                        <a href="#"><img src="{{ asset('user/images/img_h_3-min.jpg') }}"
-                                alt="Free Website Template by Free-Template.co" class="img-fluid"></a>
-                        <div class="p-4 bg-white">
-                            <h3><a href="#">Far far away, behind the word mountains</a></h3>
-                            <span class="date">April 25, 2019</span>
-                            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.
-                            </p>
-                            <p class="more"><a href="#">Continue reading...</a></p>
+                @foreach ($dataArticle as $article)
+                    <div class="col-md-6 mb-5 mb-lg-0 col-lg-4">
+                        <div class="blog_entry">
+                            <a href="#"><img src="{{ asset('storage/' . $article->image_path) }}"
+                                    alt="Free Website Template by Free-Template.co" class="img-fluid"></a>
+                            <div class="p-4 bg-white">
+                                <h3><a href="#">{{ $article->title }}</a></h3>
+                                <span class="date">{{ $article->created_at }}</span>
+                                <p>{{ $article->excerpt }}
+                                </p>
+                                <p class="more"><a href="#">Continue reading...</a></p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endforeach
 
-                <div class="col-md-6 mb-5 mb-lg-0 col-lg-4">
-                    <div class="blog_entry">
-                        <a href="#"><img src="{{ asset('user/images/img_h_5-min.jpg') }}"
-                                alt="Free Website Template by Free-Template.co" class="img-fluid"></a>
-                        <div class="p-4 bg-white">
-                            <h3><a href="#">Far far away, behind the word mountains</a></h3>
-                            <span class="date">April 25, 2019</span>
-                            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.
-                            </p>
-                            <p class="more"><a href="#">Continue reading...</a></p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 mb-5 mb-lg-0 col-lg-4">
-                    <div class="blog_entry">
-                        <a href="#"><img src="{{ asset('user/images/img_h_7-min.jpg') }}"
-                                alt="Free Website Template by Free-Template.co" class="img-fluid"></a>
-                        <div class="p-4 bg-white">
-                            <h3><a href="#">Far far away, behind the word mountains</a></h3>
-                            <span class="date">April 25, 2019</span>
-                            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.
-                            </p>
-                            <p class="more"><a href="#">Continue reading...</a></p>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="row mt-5">
                 <div class="col-lg-4 mx-auto">
@@ -372,17 +390,5 @@
             </div>
         </div>
     </div>
-
-    <!--<div class="site-section overlay site-cover-2"
-                                        style="background-image: url(&quot;{{ asset('user/images/img_v_4-min.jpg') }}&quot;)">
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class="col-lg-7 mx-auto text-center">
-                                                    <h2 class="text-white mb-4">Get this template for free! :)</h2>
-                                                    <p class="mb-0"><a href="https://untree.co/" rel="noopener" class="btn btn-primary">Get it for
-                                                            free!</a></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>-->
+    </div>
 @endsection

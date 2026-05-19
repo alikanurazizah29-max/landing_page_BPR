@@ -42,6 +42,7 @@ use App\Http\Controllers\form_elements\BasicInput;
 use App\Http\Controllers\form_elements\InputGroups;
 use App\Http\Controllers\form_layouts\VerticalForm;
 use App\Http\Controllers\form_layouts\HorizontalForm;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\tables\Basic as TablesBasic;
 use App\Models\Product;
 
@@ -139,10 +140,7 @@ Route::get('/form/layouts-horizontal', [HorizontalForm::class, 'index'])->name('
 // tables
 Route::get('/tables/basic', [TablesBasic::class, 'index'])->name('tables-basic');
 
-Route::get('/', function () {
-    $dataProduk = Product::all();
-    return view('user.page.index', compact('dataProduk'));
-})->name('navbar');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/about', function () {
     return view('user.page.about');

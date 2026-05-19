@@ -6,6 +6,8 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 @endsection
 
+
+
 @section('content')
 <h4 class="py-3 mb-4"><span class="text-muted fw-light">Manajemen /</span> Daftar Berita & Artikel</h4>
 
