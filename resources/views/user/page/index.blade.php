@@ -1,101 +1,7 @@
 @extends('user.layout.app')
 @section('title', 'BPR | Home')
+
 @section('content')
-    <style>
-        .hero-image-curve {
-            width: 80%;
-            height: 100vh;
-            object-fit: cover;
-
-            /* Lengkungan kanan */
-            border-top-right-radius: 105% 50%;
-            border-bottom-right-radius: 105% 50%;
-
-            overflow: hidden;
-        }
-
-        .hero-text-box {
-            background: #111a63;
-            min-height: 100vh;
-        }
-
-        .feature-card {
-            position: relative;
-            padding: 40px 30px 30px;
-            border-radius: 22px;
-            color: white;
-            min-height: 240px;
-            margin: 0px 20px;
-
-            transition: 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .feature-light {
-            background: #ef6b3b;
-        }
-
-        .feature-dark {
-            background: #cc4e0f;
-        }
-
-        .feature-icon {
-            position: absolute;
-            top: 20px;
-            left: -25px;
-
-            width: 50px;
-            height: 50px;
-
-            border-radius: 50%;
-            background: #fff3e8;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            border: 6px solid #f7f7f7;
-        }
-
-        .feature-icon span {
-            font-size: 24px;
-            color: #cc4e0f;
-        }
-
-        .feature-card h4 {
-            margin-top: 10px;
-            margin-bottom: 20px;
-
-            font-size: 24px;
-            font-weight: 700;
-            color: white;
-        }
-
-        .feature-card p {
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1.8;
-        }
-
-        .feature-card a {
-            display: inline-block;
-            margin-top: 20px;
-
-            color: white;
-            font-weight: 600;
-        }
-
-        .feature-shift-top {
-            margin-top: 60px;
-        }
-
-        .feature-shift-bottom {
-            margin-top: -60px;
-        }
-    </style>
-
     <div class="hero-slant overlay" data-stellar-background-ratio="0.5"
         style="background-image: url(&quot;{{ asset('user/images/hero-min.jpg') }}&quot;)">
 
@@ -113,11 +19,7 @@
                     </form>
 
                 </div>
-
-
             </div>
-
-
         </div>
 
         <div class="slant" style="background-image: url(&quot;{{ asset('user/images/slant.svg') }}&quot;);"></div>
@@ -145,15 +47,10 @@
                 <div class="item">
                     <img src="{{ asset('user/images/logo-google.png') }}" alt="Image" class="img-fluid">
                 </div>
-
-
             </div>
 
-
         </div>
-
     </div>
-
 
     <div class="site-section">
         <div class="container">
@@ -181,103 +78,41 @@
         </div>
     </div>
 
+    <div class="container-fluid px-0 position-relative d-flex align-items-center justify-content-center min-vh-100"
+        style="background-image: url('{{ asset('user/images/img_v_3-min.jpg') }}'); background-size: cover; background-position: center; background-attachment: fixed;">
 
-    <div class="container-fluid overflow-hidden">
-        <div class="row h-100 g-5" style="background: rgb(255, 255, 255)">
+        <div class="position-absolute top-0 start-0 w-100 h-100" style="background-color: rgba(0, 0, 0, 0.4); z-index: 1;">
+        </div>
 
-            <!-- IMAGE -->
-            <div class="col-lg-4 p-0 position-relative hero-image-wrapper">
+        <div class="container text-center position-relative py-5" style="z-index: 2;">
+            <h2 class="font-weight-bold mb-2 text-white">Mengapa Harus Memilih Bank?</h2>
+            <p class="text-uppercase mb-5 text-white font-weight-bold" style="letter-spacing: 2px; font-size: 0.9rem;">
+                Creative Design
+            </p>
 
-                <img src="{{ asset('user/images/img_v_3-min.jpg') }}" class="hero-image-curve">
+            <div class="row justify-content-center">
 
-            </div>
-
-            <!-- TEXT -->
-            <div class="col-lg-6 d-flex align-items-center" style="margin-inline-start: 80px">
-
-
-                <div class="row g-5">
-
-                    <!-- CARD 1 -->
-                    <div class="col-md-6 mb-4">
-                        <div class="feature-card feature-light">
-
-                            <div class="feature-icon">
-                                <span class="icon-briefcase"></span>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    @foreach ($databenefit as $benefit)
+                        <div class="card h-100 text-center shadow-lg"
+                            style="border: 2px solid #8C1818; border-radius: 8px; background-color: rgba(255, 255, 255, 0.95);">
+                            <div class="card-body py-5">
+                                <div class="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4"
+                                    style="width: 50px; height: 50px; background-color: #8C1818; color: white; font-weight: bold; font-size: 1.1rem;">
+                                    <div class="unit-4-icon">
+                                        <span class="feather-pen-tool" style="font-size: 24px;"></span>
+                                    </div>
+                                </div>
+                                <h5 class="card-title font-weight-bold" style="color: #8C1818;">{{ $benefit->title }}</h5>
+                                <p class="card-text text-muted small mt-3">{{ $benefit->description }}</p>
                             </div>
-
-                            <h4>Banking Info</h4>
-
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            </p>
-
-                            <a href="#">Read More</a>
-
                         </div>
-                    </div>
-
-                    <!-- CARD 2 -->
-                    <div class="col-md-6 mb-4 feature-shift-top">
-                        <div class="feature-card feature-dark">
-
-                            <div class="feature-icon">
-                                <span class="icon-shield"></span>
-                            </div>
-
-                            <h4>Finance & Risk</h4>
-
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            </p>
-
-                            <a href="#">Read More</a>
-
-                        </div>
-                    </div>
-
-                    <!-- CARD 3 -->
-                    <div class="col-md-6 mb-4 feature-shift-bottom">
-                        <div class="feature-card feature-dark">
-
-                            <div class="feature-icon">
-                                <span class="icon-lock"></span>
-                            </div>
-
-                            <h4>Safe & Secure</h4>
-
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            </p>
-
-                            <a href="#">Read More</a>
-
-                        </div>
-                    </div>
-
-                    <!-- CARD 4 -->
-                    <div class="col-md-6 mb-4">
-                        <div class="feature-card feature-light">
-
-                            <div class="feature-icon">
-                                <span class="icon-home"></span>
-                            </div>
-
-                            <h4>Fast Loan</h4>
-
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            </p>
-
-                            <a href="#">Read More</a>
-
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
+
             </div>
         </div>
     </div>
-
     <div class="site-section bg-light" id="blog-section">
         <div class="container">
             <div class="row">
@@ -329,56 +164,25 @@
 
                     <div class="testimonial--wrap">
                         <div class="owl-single owl-carousel no-dots no-nav">
-                            <div class="testimonial-item">
-                                <div class="d-flex align-items-center mb-4">
-                                    <div class="photo mr-3">
-                                        <img src="{{ asset('user/images/person_4-min.jpg') }}" alt="Image"
-                                            class="img-fluid">
+                            @foreach ($dataTestimonial as $testimonials)
+                                <div class="testimonial-item">
+                                    <div class="d-flex align-items-center mb-4">
+                                        <div class="photo mr-3">
+                                            <img src="{{ asset('storage/' . $testimonials->image_path) }}" alt="Image"
+                                                class="img-fluid">
+                                        </div>
+                                        <div class="author">
+                                            <cite class="d-block mb-0">{{ $testimonials->customer_name }}</cite>
+                                            {{-- <span>{{$testimonials->image_path}}</span> --}}
+                                            <div class="rating">
+                                                &#9733; &#9733; &#9733; &#9733; &#9733; </div>
+                                        </div>
                                     </div>
-                                    <div class="author">
-                                        <cite class="d-block mb-0">Kaila Woodland</cite>
-                                        <span>Owner, Greenland, Inc.</span>
-                                    </div>
+                                    <blockquote>
+                                        <p>{{ $testimonials->content }}</p>
+                                    </blockquote>
                                 </div>
-                                <blockquote>
-                                    <p>&ldquo;Far far away, behind the word mountains, far from the countries Vokalia and
-                                        Consonantia, there live the blind texts. Separated they live.&rdquo;</p>
-                                </blockquote>
-                            </div>
-
-                            <div class="testimonial-item">
-                                <div class="d-flex align-items-center mb-4">
-                                    <div class="photo mr-3">
-                                        <img src="{{ asset('user/images/person_1-min.jpg') }}" alt="Image"
-                                            class="img-fluid">
-                                    </div>
-                                    <div class="author">
-                                        <cite class="d-block mb-0">Kaila Woodland</cite>
-                                        <span>Owner, Greenland, Inc.</span>
-                                    </div>
-                                </div>
-                                <blockquote>
-                                    <p>&ldquo;Far far away, behind the word mountains, far from the countries Vokalia and
-                                        Consonantia, there live the blind texts. Separated they live.&rdquo;</p>
-                                </blockquote>
-                            </div>
-
-                            <div class="testimonial-item">
-                                <div class="d-flex align-items-center mb-4">
-                                    <div class="photo mr-3">
-                                        <img src="{{ asset('user/images/person_2-min.jpg') }}" alt="Image"
-                                            class="img-fluid">
-                                    </div>
-                                    <div class="author">
-                                        <cite class="d-block mb-0">Kaila Woodland</cite>
-                                        <span>Owner, Greenland, Inc.</span>
-                                    </div>
-                                </div>
-                                <blockquote>
-                                    <p>&ldquo;Far far away, behind the word mountains, far from the countries Vokalia and
-                                        Consonantia, there live the blind texts. Separated they live.&rdquo;</p>
-                                </blockquote>
-                            </div>
+                            @endforeach
                         </div>
                         <div class="custom-nav-wrap">
                             <a href="#" class="custom-owl-prev"><span class="icon-keyboard_backspace"></span></a>
@@ -389,6 +193,5 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection

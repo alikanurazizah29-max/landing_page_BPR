@@ -12,7 +12,7 @@
 
        <nav class="site-nav">
            <div class="logo">
-               <a href="index.html" class="text-white">Append<span class="text-black">.</span></a>
+               <a href="index.html" class="text-white">DCC Bank<span class="text-black">.</span></a>
            </div>
            <div class="row align-items-center">
 
