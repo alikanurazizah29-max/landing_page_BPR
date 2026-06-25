@@ -128,14 +128,26 @@
                 @foreach ($dataArticle as $article)
                     <div class="col-md-6 mb-5 mb-lg-0 col-lg-4">
                         <div class="blog_entry">
-                            <a href="#"><img src="{{ asset('storage/' . $article->image_path) }}"
-                                    alt="Free Website Template by Free-Template.co" class="img-fluid"></a>
+                            <a href="#"><img src="{{ asset('storage/' . $article->image_path) }}" alt=".."
+                                    class="img-fluid"></a>
                             <div class="p-4 bg-white">
                                 <h3><a href="#">{{ $article->title }}</a></h3>
-                                <span class="date">{{ $article->created_at }}</span>
-                                <p>{{ $article->excerpt }}
+                                <span
+                                    class="date">{{ \Carbon\Carbon::parse($article->created_at)->isoFormat('D MMMM Y') }}</span>
+                                <p
+                                    style="
+                    display: -webkit-box;
+                    -webkit-line-clamp: 3;
+                    -webkit-box-orient: vertical;  
+                    overflow: hidden;
+                    text-align: justify;
+                ">
+                                    {{ $article->excerpt }}
                                 </p>
-                                <p class="more"><a href="#">Continue reading...</a></p>
+                                </p>
+                                <p class="more"><a
+                                        href="{{ route('user.article.detail', ['slug' => $article->slug]) }}">Continue
+                                        reading...</a></p>
                             </div>
                         </div>
                     </div>
@@ -144,7 +156,7 @@
             </div>
             <div class="row mt-5">
                 <div class="col-lg-4 mx-auto">
-                    <a href="#" class="btn btn-primary btn-block">See All Posts</a>
+                    <a href="{{ route('user.article.articles') }}" class="btn btn-primary btn-block">See All Post</a>
                 </div>
             </div>
         </div>

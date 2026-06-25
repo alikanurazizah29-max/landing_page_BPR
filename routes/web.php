@@ -44,6 +44,7 @@ use App\Http\Controllers\form_layouts\VerticalForm;
 use App\Http\Controllers\form_layouts\HorizontalForm;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\tables\Basic as TablesBasic;
+use App\Http\Controllers\user\UserArticleController;
 use App\Models\Product;
 
 // ─── Auth Routes ─────────────────────────────────────────────────────────────
@@ -141,6 +142,8 @@ Route::get('/form/layouts-horizontal', [HorizontalForm::class, 'index'])->name('
 Route::get('/tables/basic', [TablesBasic::class, 'index'])->name('tables-basic');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/articles', [UserArticleController::class, 'index'])->name('user.article.articles');
+Route::get('/articles/detail/{slug}', [UserArticleController::class, 'detail'])->name('user.article.detail');
 
 Route::get('/about', function () {
     return view('user.page.about');
