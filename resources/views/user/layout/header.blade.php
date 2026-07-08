@@ -24,7 +24,7 @@
                            <a href="#">Pages</a>
                            <ul class="dropdown">
                                <li><a href="portfolio.html">Portfolio</a></li>
-                               <li><a href="single.html">Single</a></li>
+                               <li><a href="{{ route('user.article.articles')}}">Single</a></li>
                                <li><a href="about.html">About</a></li>
                                <li><a href="contact.html">Contact</a></li>
 
@@ -41,6 +41,7 @@
                        </li>
                        <li><a href="elements.html">Elements</a></li>
                        <li><a href="contact.html">Contact us</a></li>
+                       <li><a href="{{ route('user.layanan.layanans')}}">Layanan</a></li>
                    </ul>
 
                    <a href="#" class="burger light ml-auto site-menu-toggle js-menu-toggle d-block d-lg-none"

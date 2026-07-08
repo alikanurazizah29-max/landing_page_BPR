@@ -10,7 +10,8 @@
                 <div class="col-lg-7 intro">
                     <h1 class="text-white font-weight-bold" data-aos="fade-up" data-aos-delay="0">{{ $article->title }}
                     </h1>
-                    <p class="text-white" data-aos="fade-up" data-aos-delay="100">{{ \Carbon\Carbon::parse($article->created_at)->isoFormat('D MMMM Y') }}</p>
+                    <p class="text-white" data-aos="fade-up" data-aos-delay="100">
+                        {{ \Carbon\Carbon::parse($article->created_at)->isoFormat('D MMMM Y') }}</p>
                     <p class="text-white" data-aos="fade-up" data-aos-delay="100">{{ $article->category }}</p>
                 </div>
             </div>
@@ -42,33 +43,42 @@
                 <div class="col-lg-3 mb-5 mb-lg-0 order-lg-3">
                     <div class="row">
 
-                        @foreach ($dataArticle as $article)
-                            <div class="col-12 mb-4">
-                                <div class="blog_entry">
-                                    <a href="#"><img src="{{ asset('storage/' . $article->image_path) }}"
-                                            alt=".." class="img-fluid w-100"></a>
-                                    <div class="p-4 bg-white">
-                                        <h3><a href="#">{{ $article->title }}</a></h3>
-                                        <span class="date d-block mb-2 text-muted">
-                                            {{ \Carbon\Carbon::parse($article->created_at)->isoFormat('D MMMM Y') }}
-                                        </span>
-                                        <p
-                                            style="
-                    display: -webkit-box;
-                    -webkit-line-clamp: 4;
-                    -webkit-box-orient: vertical;  
-                    overflow: hidden;
-                    text-align: justify;
-                ">
-                                            {{ $article->excerpt }}
-                                        </p>
-                                        <p class="more mb-0"><a
-                                                href="{{ route('user.article.detail', ['slug' => $article->slug]) }}">Continue
-                                                reading...</a></p>
+                        @if ($dataArticle->isNotEmpty())
+                            @foreach ($dataArticle as $item)
+                                <div class="col-12 mb-4">
+                                    <div class="blog_entry shadow-sm rounded overflow-hidden">
+                                        <a href="{{ route('user.article.detail', ['slug' => $item->slug]) }}">
+                                            <img src="{{ asset('storage/' . $item->image_path) }}" alt=".."
+                                                class="img-fluid w-100">
+                                        </a>
+                                        <div class="p-4 bg-white">
+                                            <h3>
+                                                <a href="{{ route('user.article.detail', ['slug' => $item->slug]) }}"
+                                                    class="text-dark">
+                                                    {{ $item->title }}
+                                                </a>
+                                            </h3>
+                                            <span class="date d-block mb-2 text-muted">
+                                                {{ \Carbon\Carbon::parse($item->created_at)->isoFormat('D MMMM Y') }}
+                                            </span>
+                                            <p
+                                                style="display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; text-align: justify;">
+                                                {{ $item->excerpt }}
+                                            </p>
+                                            <p class="more mb-0">
+                                                <a href="{{ route('user.article.detail', ['slug' => $item->slug]) }}">
+                                                    Continue reading...
+                                                </a>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
+                            @endforeach
+                        @else
+                            <div class="col-12 text-center text-muted">
+                                <p>Tidak ada artikel terkait lainnya.</p>
                             </div>
-                        @endforeach
+                        @endif
 
                     </div>
                 </div>

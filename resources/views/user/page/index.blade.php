@@ -126,28 +126,37 @@
 
 
                 @foreach ($dataArticle as $article)
-                    <div class="col-md-6 mb-5 mb-lg-0 col-lg-4">
-                        <div class="blog_entry">
-                            <a href="#"><img src="{{ asset('storage/' . $article->image_path) }}" alt=".."
-                                    class="img-fluid"></a>
-                            <div class="p-4 bg-white">
-                                <h3><a href="#">{{ $article->title }}</a></h3>
-                                <span
-                                    class="date">{{ \Carbon\Carbon::parse($article->created_at)->isoFormat('D MMMM Y') }}</span>
-                                <p
-                                    style="
-                    display: -webkit-box;
-                    -webkit-line-clamp: 3;
-                    -webkit-box-orient: vertical;  
-                    overflow: hidden;
-                    text-align: justify;
-                ">
+                    <div class="col-md-6 mb-5 col-lg-4 d-flex align-items-stretch">
+                        <div class="blog_entry shadow-sm rounded overflow-hidden d-flex flex-column w-100">
+
+                            <a href="{{ route('user.article.detail', ['slug' => $article->slug]) }}"
+                                class="d-block text-center bg-light">
+                                <img src="{{ asset('storage/' . $article->image_path) }}" alt="{{ $article->title }}"
+                                    class="img-fluid w-100"
+                                    style="aspect-ratio: 3 / 2; object-fit: cover; object-position: center;">
+                            </a>
+
+                            <div class="p-4 bg-white d-flex flex-column flex-grow-1">
+                                <h3>
+                                    <a href="{{ route('user.article.detail', ['slug' => $article->slug]) }}"
+                                        class="text-dark">
+                                        {{ $article->title }}
+                                    </a>
+                                </h3>
+                                <span class="date d-block mb-3 text-muted">
+                                    {{ \Carbon\Carbon::parse($article->created_at)->isoFormat('D MMMM Y') }}
+                                </span>
+
+                                <p class="mb-auto"
+                                    style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-align: justify;">
                                     {{ $article->excerpt }}
                                 </p>
+
+                                <p class="more mb-0 pt-3">
+                                    <a href="{{ route('user.article.detail', ['slug' => $article->slug]) }}">
+                                        Continue reading...
+                                    </a>
                                 </p>
-                                <p class="more"><a
-                                        href="{{ route('user.article.detail', ['slug' => $article->slug]) }}">Continue
-                                        reading...</a></p>
                             </div>
                         </div>
                     </div>

@@ -9,7 +9,7 @@
             <div class="row align-items-center justify-content-between">
                 <div class="col-lg-7 intro mt-lg-n5">
 
-                    <h1 class="text-white font-weight-bold display-2" data-aos="fade-up" data-aos-delay="0">
+                    <h1 class="text-white font-weight-bold display-3" data-aos="fade-up" data-aos-delay="0">
                         Daftar Artikel DCC Bank
                     </h1>
 
