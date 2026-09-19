@@ -21,6 +21,7 @@
           <th style="width: 50px;">No</th>
           <th>Pertanyaan</th>
           <th>Jawaban</th>
+          <th>Status</th>
           <th style="width: 100px;">Aksi</th>
         </tr>
       </thead>
@@ -29,7 +30,12 @@
         <tr>
           <td>{{ $loop->iteration }}</td>
           <td><span class="fw-medium">{{ $faq->question }}</span></td>
-          <td><span class="fw-medium">{{ $faq->answer }}</span></td>
+          <td><span class="fw-medium">{{ \Illuminate\Support\Str::limit($faq->answer, 60) }}</span></td>
+          <td>
+            <span class="badge bg-label-{{ $faq->is_active ? 'success' : 'secondary' }}">
+              {{ $faq->is_active ? 'Aktif' : 'Nonaktif' }}
+            </span>
+          </td>
           <td>
             <div class="dropdown">
               <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></button>

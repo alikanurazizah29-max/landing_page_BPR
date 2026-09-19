@@ -15,6 +15,7 @@
       <thead>
         <tr>
           <th style="width:50px">No</th>
+          <th>Nama</th>
           <th>Email</th>
           <th>Role</th>
           <th class="text-center">Status</th>
@@ -25,7 +26,8 @@
         @foreach($users as $user)
         <tr>
           <td>{{ $loop->iteration }}</td>
-          <td class="fw-medium">{{ $user->email }}</td>
+          <td class="fw-medium">{{ $user->name }}</td>
+          <td>{{ $user->email }}</td>
           <td>{{ $user->role?->name ?? '<span class="text-muted">—</span>' }}</td>
           <td class="text-center">
             @if($user->is_active)

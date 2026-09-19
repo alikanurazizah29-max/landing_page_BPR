@@ -21,6 +21,7 @@ class AdminSeeder extends Seeder
         User::updateOrCreate(
             ['email' => 'admin@bpr.com'],
             [
+                'name'      => 'Administrator',
                 'password'  => Hash::make('password'),
                 'role_id'   => $adminRole->id,
                 'is_active' => true,

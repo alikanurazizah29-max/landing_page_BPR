@@ -19,8 +19,10 @@
       <thead>
         <tr>
           <th style="width: 50px;">No</th>
-          <th>Nama Pengirim</th>
-          <th>Email</th>
+          <th>Nama</th>
+          <th>Kontak</th>
+          <th>Minat Produk</th>
+          <th>Status</th>
           <th style="width: 100px;">Aksi</th>
         </tr>
       </thead>
@@ -29,7 +31,22 @@
         <tr>
           <td>{{ $loop->iteration }}</td>
           <td><span class="fw-medium">{{ $contactMessage->name }}</span></td>
-          <td><span class="fw-medium">{{ $contactMessage->email }}</span></td>
+          <td>
+            <div><i class="mdi mdi-phone me-1"></i>{{ $contactMessage->phone }}</div>
+            @if($contactMessage->email)
+              <div class="small text-muted"><i class="mdi mdi-email me-1"></i>{{ $contactMessage->email }}</div>
+            @endif
+          </td>
+          <td><span class="badge bg-label-info">{{ $contactMessage->product_interest ?? 'Umum' }}</span></td>
+          <td>
+            @if($contactMessage->status == 'followed_up')
+              <span class="badge bg-label-success">Ditindaklanjuti</span>
+            @elseif($contactMessage->status == 'read')
+              <span class="badge bg-label-warning">Dibaca</span>
+            @else
+              <span class="badge bg-label-danger">Belum Dibaca</span>
+            @endif
+          </td>
           <td>
             <div class="dropdown">
               <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></button>

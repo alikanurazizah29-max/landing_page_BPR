@@ -19,8 +19,10 @@
       <thead>
         <tr>
           <th style="width: 50px;">No</th>
-          <th>Nama Cabang</th>
-          <th>Tipe Kantor</th>
+          <th>Nama Kantor</th>
+          <th>Tipe</th>
+          <th>Kontak</th>
+          <th>Status</th>
           <th style="width: 100px;">Aksi</th>
         </tr>
       </thead>
@@ -28,8 +30,23 @@
         @foreach($branches as $branch)
         <tr>
           <td>{{ $loop->iteration }}</td>
-          <td><span class="fw-medium">{{ $branch->name }}</span></td>
-          <td><span class="fw-medium">{{ $branch->type }}</span></td>
+          <td>
+            <div class="fw-medium">{{ $branch->name }}</div>
+            <div class="small text-muted">{{ \Illuminate\Support\Str::limit($branch->address, 45) }}</div>
+          </td>
+          <td>
+            <span class="badge bg-label-{{ $branch->type == 'pusat' ? 'primary' : ($branch->type == 'cabang' ? 'info' : 'warning') }}">
+              Kantor {{ ucfirst($branch->type) }}
+            </span>
+          </td>
+          <td>
+            <div class="small">{{ $branch->phone ?? '-' }}</div>
+          </td>
+          <td>
+            <span class="badge bg-label-{{ $branch->is_active ? 'success' : 'secondary' }}">
+              {{ $branch->is_active ? 'Aktif' : 'Nonaktif' }}
+            </span>
+          </td>
           <td>
             <div class="dropdown">
               <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></button>

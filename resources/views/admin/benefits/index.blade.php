@@ -20,7 +20,8 @@
         <tr>
           <th style="width: 50px;">No</th>
           <th>Judul</th>
-          <th>Icon (MDI Class)</th>
+          <th>Icon</th>
+          <th>Status</th>
           <th style="width: 100px;">Aksi</th>
         </tr>
       </thead>
@@ -30,6 +31,11 @@
           <td>{{ $loop->iteration }}</td>
           <td><span class="fw-medium">{{ $benefit->title }}</span></td>
           <td><span class="fw-medium">{{ $benefit->icon }}</span></td>
+          <td>
+            <span class="badge bg-label-{{ $benefit->is_active ? 'success' : 'secondary' }}">
+              {{ $benefit->is_active ? 'Aktif' : 'Nonaktif' }}
+            </span>
+          </td>
           <td>
             <div class="dropdown">
               <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></button>

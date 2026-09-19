@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('contact_messages', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('email')->nullable();
             $table->string('phone');
             $table->string('product_interest')->nullable();
             $table->text('message')->nullable();
+            $table->enum('status', ['unread', 'read', 'followed_up'])->default('unread');
             $table->timestamps();
         });
     }

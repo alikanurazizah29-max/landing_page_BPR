@@ -20,7 +20,9 @@
         <tr>
           <th style="width: 50px;">No</th>
           <th>Nama Nasabah</th>
+          <th>Rating</th>
           <th>Isi Testimoni</th>
+          <th>Status</th>
           <th style="width: 100px;">Aksi</th>
         </tr>
       </thead>
@@ -29,7 +31,13 @@
         <tr>
           <td>{{ $loop->iteration }}</td>
           <td><span class="fw-medium">{{ $testimonial->customer_name }}</span></td>
-          <td><span class="fw-medium">{{ $testimonial->content }}</span></td>
+          <td><span class="text-warning font-weight-bold">{{ str_repeat('★', $testimonial->rating) }}</span></td>
+          <td><span class="fw-medium">{{ \Illuminate\Support\Str::limit($testimonial->content, 60) }}</span></td>
+          <td>
+            <span class="badge bg-label-{{ $testimonial->is_active ? 'success' : 'secondary' }}">
+              {{ $testimonial->is_active ? 'Aktif' : 'Nonaktif' }}
+            </span>
+          </td>
           <td>
             <div class="dropdown">
               <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></button>

@@ -69,7 +69,7 @@
                             <div>
                                 <h3>{{ $produk->title }}</h3>
                                 <p>{{ $produk->description }}</p>
-                                <p><a href="#">Learn More</a></p>
+                                <p><a href="{{ route('user.layanan.detail', $produk->slug ?? $produk->id) }}" class="text-primary font-weight-bold">Pelajari Selengkapnya &rarr;</a></p>
                             </div>
                         </div>
                     </div>

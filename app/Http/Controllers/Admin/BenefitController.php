@@ -29,10 +29,11 @@ class BenefitController extends Controller
             $validated = $request->validate([
                 'title' => 'required|string|max:255',
                 'icon' => 'nullable|string|max:255',
-                'description' => 'required|string'
+                'description' => 'required|string',
+                'is_active' => 'nullable'
             ]);
             
-            
+            $validated['is_active'] = $request->has('is_active') ? 1 : 0;
             
             Benefit::create($validated);
             return response()->json([
@@ -61,10 +62,11 @@ class BenefitController extends Controller
             $validated = $request->validate([
                 'title' => 'required|string|max:255',
                 'icon' => 'nullable|string|max:255',
-                'description' => 'required|string'
+                'description' => 'required|string',
+                'is_active' => 'nullable'
             ]);
             
-            
+            $validated['is_active'] = $request->has('is_active') ? 1 : 0;
             
             $benefit->update($validated);
             return response()->json([

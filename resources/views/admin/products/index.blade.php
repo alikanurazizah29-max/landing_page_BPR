@@ -20,7 +20,9 @@
         <tr>
           <th style="width: 50px;">No</th>
           <th>Nama Produk</th>
-          <th>Icon (MDI Class)</th>
+          <th>Tipe</th>
+          <th>Icon</th>
+          <th>Status</th>
           <th style="width: 100px;">Aksi</th>
         </tr>
       </thead>
@@ -29,7 +31,17 @@
         <tr>
           <td>{{ $loop->iteration }}</td>
           <td><span class="fw-medium">{{ $product->title }}</span></td>
+          <td>
+            <span class="badge bg-label-{{ $product->type == 'deposito' ? 'warning' : ($product->type == 'kredit' ? 'primary' : 'success') }}">
+              {{ ucfirst($product->type) }}
+            </span>
+          </td>
           <td><span class="fw-medium">{{ $product->icon }}</span></td>
+          <td>
+            <span class="badge bg-label-{{ $product->is_active ? 'success' : 'secondary' }}">
+              {{ $product->is_active ? 'Aktif' : 'Nonaktif' }}
+            </span>
+          </td>
           <td>
             <div class="dropdown">
               <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></button>

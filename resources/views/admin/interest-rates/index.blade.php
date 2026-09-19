@@ -21,6 +21,9 @@
           <th style="width: 50px;">No</th>
           <th>Tipe Produk</th>
           <th>Durasi / Tenor</th>
+          <th>Suku Bunga (%)</th>
+          <th>Keterangan</th>
+          <th>Status</th>
           <th style="width: 100px;">Aksi</th>
         </tr>
       </thead>
@@ -28,8 +31,15 @@
         @foreach($interest_rates as $interestRate)
         <tr>
           <td>{{ $loop->iteration }}</td>
-          <td><span class="fw-medium">{{ $interestRate->product_type }}</span></td>
+          <td><span class="badge bg-label-primary">{{ $interestRate->product_type }}</span></td>
           <td><span class="fw-medium">{{ $interestRate->duration }}</span></td>
+          <td><span class="fw-bold text-success">{{ $interestRate->rate }}%</span></td>
+          <td><span class="small text-muted">{{ $interestRate->description ?? '-' }}</span></td>
+          <td>
+            <span class="badge bg-label-{{ $interestRate->is_active ? 'success' : 'secondary' }}">
+              {{ $interestRate->is_active ? 'Aktif' : 'Nonaktif' }}
+            </span>
+          </td>
           <td>
             <div class="dropdown">
               <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></button>

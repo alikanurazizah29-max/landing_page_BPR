@@ -13,9 +13,13 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->enum('type', ['tabungan', 'deposito', 'kredit'])->default('tabungan');
             $table->string('title');
+            $table->string('slug')->nullable()->unique();
+            $table->string('image')->nullable();
             $table->text('description');
             $table->string('icon')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

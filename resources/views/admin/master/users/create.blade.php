@@ -9,6 +9,10 @@
       <form id="ajaxForm" action="{{ route('admin.master.users.store') }}" method="POST">
         @csrf
         <div class="form-floating form-floating-outline mb-4">
+          <input type="text" class="form-control" id="name" name="name" placeholder="Nama Lengkap" required />
+          <label for="name">Nama Lengkap</label>
+        </div>
+        <div class="form-floating form-floating-outline mb-4">
           <input type="email" class="form-control" id="email" name="email" placeholder="Email" required />
           <label for="email">Email</label>
         </div>

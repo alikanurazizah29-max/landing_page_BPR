@@ -22,7 +22,8 @@
         <tr>
           <th style="width: 50px;">No</th>
           <th>Judul Artikel</th>
-          <th>Slug (URL)</th>
+          <th>Kategori</th>
+          <th>Status</th>
           <th style="width: 100px;">Aksi</th>
         </tr>
       </thead>
@@ -30,8 +31,16 @@
         @foreach($articles as $article)
         <tr>
           <td>{{ $loop->iteration }}</td>
-          <td><span class="fw-medium">{{ $article->title }}</span></td>
-          <td><span class="fw-medium">{{ $article->slug }}</span></td>
+          <td>
+            <div class="fw-medium">{{ $article->title }}</div>
+            <div class="small text-muted">{{ $article->slug }}</div>
+          </td>
+          <td><span class="badge bg-label-info">{{ $article->category ?? 'Berita' }}</span></td>
+          <td>
+            <span class="badge bg-label-{{ $article->is_published ? 'success' : 'warning' }}">
+              {{ $article->is_published ? 'Dipublikasikan' : 'Draft' }}
+            </span>
+          </td>
           <td>
             <div class="dropdown">
               <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></button>

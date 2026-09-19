@@ -27,12 +27,25 @@ class ProductController extends Controller
     {
         try {
             $validated = $request->validate([
+                'type' => 'nullable|in:tabungan,deposito,kredit',
                 'title' => 'required|string|max:255',
+                'slug' => 'nullable|string|max:255|unique:products,slug',
                 'icon' => 'nullable|string|max:255',
-                'description' => 'required|string'
+                'image' => 'nullable|image|max:2048',
+                'description' => 'required|string',
+                'is_active' => 'nullable'
             ]);
             
-            
+            if (empty($validated['slug'])) {
+                $validated['slug'] = \Illuminate\Support\Str::slug($validated['title']);
+            }
+            if (empty($validated['type'])) {
+                $validated['type'] = 'tabungan';
+            }
+            if ($request->hasFile('image')) {
+                $validated['image'] = $request->file('image')->store('uploads/products', 'public');
+            }
+            $validated['is_active'] = $request->has('is_active') ? 1 : 0;
             
             Product::create($validated);
             return response()->json([
@@ -59,12 +72,25 @@ class ProductController extends Controller
     {
         try {
             $validated = $request->validate([
+                'type' => 'nullable|in:tabungan,deposito,kredit',
                 'title' => 'required|string|max:255',
+                'slug' => 'nullable|string|max:255|unique:products,slug,' . $product->id,
                 'icon' => 'nullable|string|max:255',
-                'description' => 'required|string'
+                'image' => 'nullable|image|max:2048',
+                'description' => 'required|string',
+                'is_active' => 'nullable'
             ]);
             
-            
+            if (empty($validated['slug'])) {
+                $validated['slug'] = \Illuminate\Support\Str::slug($validated['title']);
+            }
+            if (empty($validated['type'])) {
+                $validated['type'] = $product->type ?? 'tabungan';
+            }
+            if ($request->hasFile('image')) {
+                $validated['image'] = $request->file('image')->store('uploads/products', 'public');
+            }
+            $validated['is_active'] = $request->has('is_active') ? 1 : 0;
             
             $product->update($validated);
             return response()->json([

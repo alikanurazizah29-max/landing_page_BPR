@@ -19,8 +19,10 @@
       <thead>
         <tr>
           <th style="width: 50px;">No</th>
+          <th>Banner</th>
           <th>Judul</th>
-          <th>Sub Judul</th>
+          <th>Urutan</th>
+          <th>Status</th>
           <th style="width: 100px;">Aksi</th>
         </tr>
       </thead>
@@ -28,8 +30,23 @@
         @foreach($hero_banners as $heroBanner)
         <tr>
           <td>{{ $loop->iteration }}</td>
-          <td><span class="fw-medium">{{ $heroBanner->title }}</span></td>
-          <td><span class="fw-medium">{{ $heroBanner->subtitle }}</span></td>
+          <td>
+            @if($heroBanner->image_path)
+              <img src="{{ asset('storage/' . $heroBanner->image_path) }}" alt="Banner" class="rounded" style="height: 40px; width: 70px; object-fit: cover;">
+            @else
+              <span class="text-muted small">No Image</span>
+            @endif
+          </td>
+          <td>
+            <div class="fw-medium">{{ $heroBanner->title }}</div>
+            <div class="small text-muted">{{ $heroBanner->subtitle }}</div>
+          </td>
+          <td><span class="badge bg-label-primary">#{{ $heroBanner->order }}</span></td>
+          <td>
+            <span class="badge bg-label-{{ $heroBanner->is_active ? 'success' : 'secondary' }}">
+              {{ $heroBanner->is_active ? 'Aktif' : 'Nonaktif' }}
+            </span>
+          </td>
           <td>
             <div class="dropdown">
               <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></button>

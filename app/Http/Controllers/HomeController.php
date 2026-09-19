@@ -13,11 +13,11 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $dataProduct = Product::all();
-        $dataArticle = Article::all();
-        $dataTestimonial = Testimonial::all();
-        $dataHeroBanner = HeroBanner::all();
-        $databenefit = Benefit::all();
+        $dataProduct = Product::where('is_active', true)->get();
+        $dataArticle = Article::where('is_published', true)->latest()->take(3)->get();
+        $dataTestimonial = Testimonial::where('is_active', true)->get();
+        $dataHeroBanner = HeroBanner::where('is_active', true)->orderBy('order', 'asc')->get();
+        $databenefit = Benefit::where('is_active', true)->get();
         return view('user.page.index', [
             'dataArticle' => $dataArticle,
             'dataProduk' => $dataProduct,

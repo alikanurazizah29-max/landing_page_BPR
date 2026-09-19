@@ -28,14 +28,14 @@ class ContactMessageController extends Controller
         try {
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
-                'email' => 'required|email|max:255',
-                'subject' => 'nullable|string|max:255',
-                'message' => 'required|string',
-                'is_read' => 'nullable'
+                'email' => 'nullable|email|max:255',
+                'phone' => 'required|string|max:255',
+                'product_interest' => 'nullable|string|max:255',
+                'message' => 'nullable|string',
+                'status' => 'nullable|in:unread,read,followed_up'
             ]);
             
-            
-            $validated['is_read'] = $request->has('is_read') ? 1 : 0;
+            $validated['status'] = $validated['status'] ?? 'unread';
             
             ContactMessage::create($validated);
             return response()->json([
@@ -63,14 +63,12 @@ class ContactMessageController extends Controller
         try {
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
-                'email' => 'required|email|max:255',
-                'subject' => 'nullable|string|max:255',
-                'message' => 'required|string',
-                'is_read' => 'nullable'
+                'email' => 'nullable|email|max:255',
+                'phone' => 'required|string|max:255',
+                'product_interest' => 'nullable|string|max:255',
+                'message' => 'nullable|string',
+                'status' => 'required|in:unread,read,followed_up'
             ]);
-            
-            
-            $validated['is_read'] = $request->has('is_read') ? 1 : 0;
             
             $contactMessage->update($validated);
             return response()->json([

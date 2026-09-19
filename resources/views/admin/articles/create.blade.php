@@ -23,6 +23,7 @@
           <div class="form-floating form-floating-outline mb-4">
             <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug" placeholder="Slug (URL)" required />
             <label for="slug">Slug (URL)</label>
+            <div class="form-text">Otomatis terisi saat mengetik judul artikel (dapat diubah manual).</div>
           </div>
 
           <div class="form-floating form-floating-outline mb-4">

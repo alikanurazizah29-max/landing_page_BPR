@@ -22,26 +22,32 @@
           </div>
 
           <div class="form-floating form-floating-outline mb-4">
-            <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ $contactMessage->email }}" placeholder="Email" required />
-            <label for="email">Email</label>
+            <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" value="{{ $contactMessage->phone }}" placeholder="Nomor Telepon/WA" required />
+            <label for="phone">Nomor Telepon / WhatsApp</label>
           </div>
 
           <div class="form-floating form-floating-outline mb-4">
-            <input type="text" class="form-control @error('subject') is-invalid @enderror" id="subject" name="subject" value="{{ $contactMessage->subject }}" placeholder="Subjek"  />
-            <label for="subject">Subjek</label>
+            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ $contactMessage->email }}" placeholder="Email" />
+            <label for="email">Email (Opsional)</label>
           </div>
 
           <div class="form-floating form-floating-outline mb-4">
-            <textarea class="form-control h-px-100 @error('message') is-invalid @enderror" id="message" name="message" placeholder="Isi Pesan..." required>{{ $contactMessage->message }}</textarea>
+            <input type="text" class="form-control @error('product_interest') is-invalid @enderror" id="product_interest" name="product_interest" value="{{ $contactMessage->product_interest }}" placeholder="Minat Produk"  />
+            <label for="product_interest">Minat Produk</label>
+          </div>
+
+          <div class="form-floating form-floating-outline mb-4">
+            <textarea class="form-control h-px-100 @error('message') is-invalid @enderror" id="message" name="message" placeholder="Isi Pesan...">{{ $contactMessage->message }}</textarea>
             <label for="message">Isi Pesan</label>
           </div>
 
-          <div class="mb-4">
-            <label class="form-label d-block">Sudah Dibaca</label>
-            <div class="form-check form-switch mb-2">
-              <input class="form-check-input" type="checkbox" id="is_read" name="is_read" value="1" {{ $contactMessage->is_read ? 'checked' : '' }} />
-              <label class="form-check-label" for="is_read">Aktif / Ya</label>
-            </div>
+          <div class="form-floating form-floating-outline mb-4">
+            <select class="form-select @error('status') is-invalid @enderror" id="status" name="status" required>
+              <option value="unread" {{ $contactMessage->status == 'unread' ? 'selected' : '' }}>Belum Dibaca (Unread)</option>
+              <option value="read" {{ $contactMessage->status == 'read' ? 'selected' : '' }}>Sudah Dibaca (Read)</option>
+              <option value="followed_up" {{ $contactMessage->status == 'followed_up' ? 'selected' : '' }}>Sudah Ditindaklanjuti (Followed Up)</option>
+            </select>
+            <label for="status">Status Tindak Lanjut</label>
           </div>
 
           
