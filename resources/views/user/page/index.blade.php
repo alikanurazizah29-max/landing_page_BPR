@@ -78,25 +78,24 @@
         </div>
     </div>
 
-    <div class="container-fluid px-0 position-relative d-flex align-items-center justify-content-center min-vh-100"
+    <div class="position-relative py-5"
         style="background-image: url('{{ asset('user/images/img_v_3-min.jpg') }}'); background-size: cover; background-position: center; background-attachment: fixed;">
 
-        <div class="position-absolute top-0 start-0 w-100 h-100" style="background-color: rgba(0, 0, 0, 0.4); z-index: 1;">
+        <div class="position-absolute" style="top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1;">
         </div>
 
         <div class="container text-center position-relative py-5" style="z-index: 2;">
             <h2 class="font-weight-bold mb-2 text-white">Mengapa Harus Memilih Bank?</h2>
             <p class="text-uppercase mb-5 text-white font-weight-bold" style="letter-spacing: 2px; font-size: 0.9rem;">
-                Creative Design
+                Keunggulan &amp; Nilai Lebih Kami
             </p>
 
             <div class="row justify-content-center">
-
-                <div class="col-lg-3 col-md-6 mb-4">
-                    @foreach ($databenefit as $benefit)
-                        <div class="card h-100 text-center shadow-lg"
+                @foreach ($databenefit as $benefit)
+                    <div class="col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
+                        <div class="card w-100 text-center shadow-lg"
                             style="border: 2px solid #8C1818; border-radius: 8px; background-color: rgba(255, 255, 255, 0.95);">
-                            <div class="card-body py-5">
+                            <div class="card-body py-5 d-flex flex-column justify-content-center">
                                 <div class="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4"
                                     style="width: 50px; height: 50px; background-color: #8C1818; color: white; font-weight: bold; font-size: 1.1rem;">
                                     <div class="unit-4-icon">
@@ -104,12 +103,11 @@
                                     </div>
                                 </div>
                                 <h5 class="card-title font-weight-bold" style="color: #8C1818;">{{ $benefit->title }}</h5>
-                                <p class="card-text text-muted small mt-3">{{ $benefit->description }}</p>
+                                <p class="card-text text-muted small mt-3 mb-0">{{ $benefit->description }}</p>
                             </div>
                         </div>
-                    @endforeach
-                </div>
-
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -189,8 +187,11 @@
                                 <div class="testimonial-item">
                                     <div class="d-flex align-items-center mb-4">
                                         <div class="photo mr-3">
-                                            <img src="{{ asset('storage/' . $testimonials->image_path) }}" alt="Image"
-                                                class="img-fluid">
+                                            @if ($testimonials->image_path)
+                                                <img src="{{ asset('storage/' . $testimonials->image_path) }}" alt="{{ $testimonials->customer_name }}" class="img-fluid">
+                                            @else
+                                                <img src="{{ asset('user/images/person_' . (($loop->index % 4) + 1) . '-min.jpg') }}" alt="{{ $testimonials->customer_name }}" class="img-fluid">
+                                            @endif
                                         </div>
                                         <div class="author">
                                             <cite class="d-block mb-0">{{ $testimonials->customer_name }}</cite>
