@@ -19,12 +19,11 @@
 
                <div class="col-12 col-sm-12 col-lg-12 site-navigation text-center">
                    <ul class="js-clone-nav d-none d-lg-inline-block text-left site-menu">
-                       <li class="active"><a href="index.html">Home</a></li>
+                       <li class="active"><a href="{{ route('home')}}">Home</a></li>
                        <li class="has-children">
                            <a href="#">Pages</a>
                            <ul class="dropdown">
                                <li><a href="portfolio.html">Portfolio</a></li>
-                               <li><a href="{{ route('user.article.articles')}}">Single</a></li>
                                <li><a href="about.html">About</a></li>
                                <li><a href="contact.html">Contact</a></li>
 
@@ -41,7 +40,8 @@
                        </li>
                        <li><a href="elements.html">Elements</a></li>
                        <li><a href="contact.html">Contact us</a></li>
-                       <li><a href="{{ route('user.layanan.layanans')}}">Layanan</a></li>
+                       <li><a href="{{ route('user.article.articles')}}">Berita</a></li>
+                       <li><a href="{{ route('user.layanan.layanans')}}">Simpanan</a></li>
                    </ul>
 
                    <a href="#" class="burger light ml-auto site-menu-toggle js-menu-toggle d-block d-lg-none"

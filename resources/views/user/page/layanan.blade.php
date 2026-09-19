@@ -41,12 +41,11 @@
                                 <div class="unit-4-icon mr-4">
                                     <span class="feather-pen-tool"></span>
                                 </div>
-                                <div>
+                                <div class="pr-4">
                                     <h3>{{ $produk->title }}</h3>
-                                    <p>{{ $produk->description }}</p>
+                                    <p class="text-break">{{ \Illuminate\Support\Str::limit($produk->description, 75) }}</p>
                                     <p>
-                                        <a
-                                            href="{{ route('user.layanan.detail', [ $produk->id]) }}">
+                                        <a href="{{ route('user.layanan.detail', [$produk->id]) }}">
                                             Learn More
                                         </a>
                                     </p>

@@ -40,22 +40,17 @@
                             <div class="blog_entry" style="margin-bottom: 30%">
                                 <a href="{{ asset('storage/' . $article->image_path) }}" data-fancybox="gal">
                                     <img src="{{ asset('storage/' . $article->image_path) }}" alt="Image"
-                                        class="img-fluid">
+                                        class="img-fluid w-100"
+                                        style="aspect-ratio: 3 / 2; object-fit: cover; object-position: center;">
                                 </a>
                                 <div class="p-4 bg-white">
                                     <h3><a href="#">{{ $article->title }}</a></h3>
-                                    <span
-                                        class="date">{{ \Carbon\Carbon::parse($article->created_at)->isoFormat('D MMMM Y') }}</span>
-                                    <p
-                                        style="
-                                    display: -webkit-box;
-                                    -webkit-line-clamp: 3;
-                                    -webkit-box-orient: vertical;  
-                                    overflow: hidden;
-                                    text-align: justify;
-                                ">
+                                    <span class="date d-block mb-3 text-muted">
+                                        {{ \Carbon\Carbon::parse($article->created_at)->isoFormat('D MMMM Y') }}
+                                    </span>
+                                    <p class="mb-auto"
+                                        style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-align: justify;">
                                         {{ $article->excerpt }}
-                                    </p>
                                     </p>
                                     <p class="more"><a
                                             href="{{ route('user.article.detail', ['slug' => $article->slug]) }}">Continue
