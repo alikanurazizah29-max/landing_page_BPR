@@ -1,177 +1,147 @@
- @extends('user.layout.app')
- @section('title', 'BPR | Home')
- @section('content')
+@extends('user.layout.app')
+@section('title', 'Hubungi Kami | BPR')
 
-     <div class="hero-slant overlay" data-stellar-background-ratio="0.5"
+@section('content')
+
+    <!-- 1. Hero Section Kontak -->
+    <div class="hero-slant overlay" data-stellar-background-ratio="0.5"
          style="background-image: url(&quot;{{ asset('user/images/hero-min.jpg') }}&quot;)">
 
-         <div class="container">
-             <div class="row align-items-center justify-content-center">
-                 <div class="col-lg-7 intro text-center">
-                     <h1 class="text-white font-weight-bold mb-4" data-aos="fade-up" data-aos-delay="0">Contact</h1>
-                     <p class="text-white mb-4" data-aos="fade-up" data-aos-delay="100">Far far away, behind the word
-                         mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated
-                         they live.</p>
-                     <p data-aos="fade-up" data-aos-delay="200"><a href="#" class="btn btn-primary">Get Started</a>
-                     </p>
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-lg-7 intro text-center">
+                    <h1 class="text-white font-weight-bold mb-4" data-aos="fade-up" data-aos-delay="0">Hubungi Kami</h1>
+                    <p class="text-white mb-4" data-aos="fade-up" data-aos-delay="100">
+                        Kami siap melayani informasi produk, konsultasi simpanan/kredit, serta pengaduan nasabah dengan profesional.
+                    </p>
+                </div>
+            </div>
+        </div>
 
+        <div class="slant" style="background-image: url(&quot;{{ asset('user/images/slant-grey.svg') }}&quot;);"></div>
+    </div>
 
-                 </div>
+    <!-- 2. Informasi Kontak & Formulir Pengaduan -->
+    <div class="section-grey bg-light py-5">
+        <div class="container bg-white p-4 p-md-5 rounded shadow-sm">
 
+            <!-- Alert Notifikasi Sukses -->
+            @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+                    <strong>Berhasil!</strong> {{ session('success') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
 
-             </div>
+            <div class="block">
+                <div class="row justify-content-center mb-5">
+                    <!-- Kartu Info Kontak Dinamis -->
+                    <div class="col-md-12 col-lg-12 pb-4" data-aos="fade-up" data-aos-delay="200">
+                        <div class="row">
+                            <!-- Alamat Kantor -->
+                            <div class="col-lg-4 mb-4 mb-lg-0">
+                                <div class="service-2 no-shadow link horizontal d-flex p-3 border rounded h-100 bg-light">
+                                    <div class="service-icon color-1 mr-3 text-primary">
+                                        <span class="feather-map-pin" style="font-size: 24px;"></span>
+                                    </div>
+                                    <div class="service-contents">
+                                        <h6 class="font-weight-bold mb-1">Alamat Kantor</h6>
+                                        <p class="small text-muted mb-0">{{ $companyProfile->address ?? 'Alamat Kantor Pusat BPR' }}</p>
+                                    </div>
+                                </div>
+                            </div>
 
+                            <!-- Email Resmi -->
+                            <div class="col-lg-4 mb-4 mb-lg-0">
+                                <div class="service-2 no-shadow link horizontal d-flex p-3 border rounded h-100 bg-light">
+                                    <div class="service-icon color-1 mr-3 text-primary">
+                                        <span class="feather-mail" style="font-size: 24px;"></span>
+                                    </div>
+                                    <div class="service-contents">
+                                        <h6 class="font-weight-bold mb-1">Email Resmi</h6>
+                                        <p class="small text-muted mb-0">{{ $companyProfile->email ?? 'info@bpr.co.id' }}</p>
+                                    </div>
+                                </div>
+                            </div>
 
-         </div>
+                            <!-- Telepon / WhatsApp -->
+                            <div class="col-lg-4">
+                                <div class="service-2 no-shadow link horizontal d-flex p-3 border rounded h-100 bg-light">
+                                    <div class="service-icon color-1 mr-3 text-primary">
+                                        <span class="feather-phone" style="font-size: 24px;"></span>
+                                    </div>
+                                    <div class="service-contents">
+                                        <h6 class="font-weight-bold mb-1">Layanan Telepon / WA</h6>
+                                        <p class="small text-muted mb-0">{{ $companyProfile->phone ?? $companyProfile->whatsapp ?? '-' }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-         <div class="slant" style="background-image: url(&quot;{{ asset('user/images/slant-grey.svg') }}&quot;);"></div>
-     </div>
+                <!-- Formulir Kirim Pesan -->
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <h3 class="font-weight-bold mb-4 text-center">Kirimkan Pesan atau Pertanyaan</h3>
+                        <form action="{{ route('contact.send') }}" method="POST">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="text-black font-weight-bold" for="name">Nama Lengkap <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="name" name="name" required placeholder="Nama Anda">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="text-black font-weight-bold" for="email">Alamat Email <span class="text-danger">*</span></label>
+                                        <input type="email" class="form-control" id="email" name="email" required placeholder="nama@email.com">
+                                    </div>
+                                </div>
+                            </div>
 
-     <div class="section-grey bg-light">
-         <div class="container bg-white p-5">
+                            <div class="form-group">
+                                <label class="text-black font-weight-bold" for="phone">Nomor Handphone / WhatsApp <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="phone" name="phone" required placeholder="Contoh: 08123456789">
+                            </div>
 
-             <div class="block">
-                 <div class="row justify-content-center">
+                            <div class="form-group">
+                                <label class="text-black font-weight-bold" for="product_interest">Produk yang Diminati</label>
+                                <select name="product_interest" class="form-control mb-3">
+                                    <option value="">-- Pilih Layanan (Opsional) --</option>
+                                    <option value="Kredit UMKM / Modal Kerja">Kredit UMKM / Modal Kerja</option>
+                                    <option value="Kredit Konsumtif / Multiguna">Kredit Konsumtif / Multiguna</option>
+                                    <option value="Tabungan BPR">Tabungan BPR</option>
+                                    <option value="Deposito Berjangka">Deposito Berjangka</option>
+                                    <option value="Pengaduan Nasabah">Pengaduan Nasabah / WBS</option>
+                                </select>
+                            </div>
 
+                            <div class="form-group">
+                                <label class="text-black font-weight-bold" for="message">Pesan / Pengaduan <span class="text-danger">*</span></label>
+                                <textarea name="message" class="form-control" id="message" cols="30" rows="5" required placeholder="Tuliskan pesan, pertanyaan, atau kendala Anda di sini..."></textarea>
+                            </div>
 
-                     <div class="col-md-12 col-lg-12 pb-4" data-aos="fade-up" data-aos-delay="200">
+                            <button type="submit" class="btn btn-primary btn-block font-weight-bold py-3">Kirim Pesan Sekarang</button>
+                        </form>
+                    </div>
+                </div>
 
+            </div>
+        </div>
+    </div>
 
-                         <div class="row">
-                             <div class="col-lg-4">
-                                 <div class="service-2 no-shadow link horizontal d-flex active" data-aos="fade-left"
-                                     data-aos-delay="0">
-                                     <div class="service-icon color-1 mb-4">
-                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                             fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
-                                             <path
-                                                 d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
-                                         </svg>
-                                     </div> <!-- /.icon -->
-                                     <div class="service-contents">
-                                         <p>43 Raymouth Rd. Baltemoer, London 3910</p>
-                                     </div> <!-- /.service-contents-->
-                                 </div> <!-- /.service -->
-                             </div>
+    <!-- 3. Google Maps Kantor Pusat -->
+    <div class="site-section bg-light pt-0">
+        <div class="container">
+            <div class="card border-0 shadow-sm p-2 rounded overflow-hidden">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127164.2981328906!2d119.3820252!3d-5.1476651!2m3!1f0!0!f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dbf01a0cb32393f%3A0x3030bf43d0612f0!2sMakassar%2C%20South%20Sulawesi!5e0!3m2!1sen!2sid!4v1680000000000!5m2!1sen!2sid" 
+                        width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </div>
 
-                             <div class="col-lg-4">
-                                 <div class="service-2 no-shadow link horizontal d-flex active" data-aos="fade-left"
-                                     data-aos-delay="0">
-                                     <div class="service-icon color-1 mb-4">
-                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                             fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
-                                             <path
-                                                 d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z" />
-                                         </svg>
-                                     </div> <!-- /.icon -->
-                                     <div class="service-contents">
-                                         <p>info@yourdomain.com</p>
-                                     </div> <!-- /.service-contents-->
-                                 </div> <!-- /.service -->
-                             </div>
-
-                             <div class="col-lg-4">
-                                 <div class="service-2 no-shadow link horizontal d-flex active" data-aos="fade-left"
-                                     data-aos-delay="0">
-                                     <div class="service-icon color-1 mb-4">
-                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                             fill="currentColor" class="bi bi-telephone-fill" viewBox="0 0 16 16">
-                                             <path fill-rule="evenodd"
-                                                 d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
-                                         </svg>
-                                     </div> <!-- /.icon -->
-                                     <div class="service-contents">
-                                         <p>+1 294 3925 3939</p>
-                                     </div> <!-- /.service-contents-->
-                                 </div> <!-- /.service -->
-                             </div>
-                         </div>
-                         <form>
-                             <div class="row">
-                                 <div class="col-6">
-                                     <div class="form-group">
-                                         <label class="text-black" for="name">Nama Lengkap</label>
-                                         <input type="text" class="form-control" id="name" name="name">
-                                     </div>
-                                 </div>
-
-                             </div>
-                             <div class="form-group">
-                                 <label class="text-black" for="phone">Nomor Handphone</label>
-                                 <input type="text" class="form-control" id="phone" name="phone">
-                             </div>
-                             <div class="form-group">
-                                 <label class="text-black" for="product_interest">Produk yang Diminati</label>
-                                 <select name="product_interest" class="form-control mb-3">
-                                     <option value="">Pilih Produk</option>
-                                     <option value="Kredit">Kredit</option>
-                                     <option value="Tabungan">Tabungan</option>
-                                     <option value="Deposito">Deposito</option>
-                                 </select>
-                             </div>
-
-                             <div class="form-group">
-                                 <label class="text-black" for="message">Message</label>
-                                 <textarea name="message" class="form-control" id="message" cols="30" rows="5"></textarea>
-                             </div>
-
-                             <button type="submit" class="btn btn-primary">Send Message</button>
-                         </form>
-
-                     </div>
-                 </div>
-             </div>
-         </div>
-     </div>
-
-     <div class="site-section">
-         <div class="container">
-             <div class="row justify-content-center">
-                 <div class="col-lg-6 text-center">
-                     <h4 class="font-weight-bold">Our Clients</h4>
-                 </div>
-             </div>
-
-             <div class="owl-logos owl-carousel">
-                 <div class="item">
-                     <img src="{{ asset('user/images/logo-puma.png') }}" alt="Image" class="img-fluid">
-                 </div>
-                 <div class="item">
-                     <img src="{{ asset('user/images/logo-adobe.png') }}" alt="Image" class="img-fluid">
-                 </div>
-                 <div class="item">
-                     <img src="{{ asset('user/images/logo-google.png') }}" alt="Image" class="img-fluid">
-                 </div>
-                 <div class="item">
-                     <img src="{{ asset('user/images/logo-paypal.png') }}" alt="Image" class="img-fluid">
-                 </div>
-                 <div class="item">
-                     <img src="{{ asset('user/images/logo-adobe.png') }}" alt="Image" class="img-fluid">
-                 </div>
-                 <div class="item">
-                     <img src="{{ asset('user/images/logo-google.png') }}" alt="Image" class="img-fluid">
-                 </div>
-
-
-             </div>
-
-
-         </div>
-
-     </div>
-
-
-     <div class="site-section overlay site-cover-2"
-         style="background-image: url(&quot;{{ asset('user/images/img_v_3-min.jpg') }}&quot;)">
-         <div class="container">
-             <div class="row">
-                 <div class="col-lg-7 mx-auto text-center">
-                     <h2 class="text-white mb-4">Get this template for free! :)</h2>
-                     <p class="mb-0"><a href="https://untree.co/" rel="noopener" class="btn btn-primary">Get it for
-                             free!</a></p>
-                 </div>
-             </div>
-         </div>
-     </div>
-
- @endsection
+@endsection

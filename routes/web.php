@@ -42,11 +42,15 @@ use App\Http\Controllers\form_elements\BasicInput;
 use App\Http\Controllers\form_elements\InputGroups;
 use App\Http\Controllers\form_layouts\VerticalForm;
 use App\Http\Controllers\form_layouts\HorizontalForm;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\LayananController;
 use App\Http\Controllers\tables\Basic as TablesBasic;
+
+// ─── Import Controller Public/User dari namespace \user ───────────────────────
+use App\Http\Controllers\user\HomeController;
+use App\Http\Controllers\user\LayananController;
 use App\Http\Controllers\user\UserArticleController;
-use App\Models\Product;
+use App\Http\Controllers\user\UserContactController;
+use App\Http\Controllers\user\AboutController;
+use App\Http\Controllers\user\PrivacyController;
 
 // ─── Auth Routes ─────────────────────────────────────────────────────────────
 Route::middleware('guest')->group(function () {
@@ -55,7 +59,7 @@ Route::middleware('guest')->group(function () {
 });
 Route::post('/logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout')->middleware('auth');
 
-// ─── Dashboard ────────────────────────────────────────────────────────────────
+// ─── Dashboard Admin ──────────────────────────────────────────────────────────
 Route::get('/admin', [Analytics::class, 'index'])->name('dashboard-analytics')->middleware('auth');
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'rbac'])->group(function () {
@@ -81,29 +85,25 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'rbac'])->group(func
     });
 });
 
-// layout
+// ─── Layout, Pages, Cards, UI & Form Routes (Sneat / Admin UI) ─────────────────
 Route::get('/layouts/without-menu', [WithoutMenu::class, 'index'])->name('layouts-without-menu');
 Route::get('/layouts/without-navbar', [WithoutNavbar::class, 'index'])->name('layouts-without-navbar');
 Route::get('/layouts/fluid', [Fluid::class, 'index'])->name('layouts-fluid');
 Route::get('/layouts/container', [Container::class, 'index'])->name('layouts-container');
 Route::get('/layouts/blank', [Blank::class, 'index'])->name('layouts-blank');
 
-// pages
 Route::get('/pages/account-settings-account', [AccountSettingsAccount::class, 'index'])->name('pages-account-settings-account');
 Route::get('/pages/account-settings-notifications', [AccountSettingsNotifications::class, 'index'])->name('pages-account-settings-notifications');
 Route::get('/pages/account-settings-connections', [AccountSettingsConnections::class, 'index'])->name('pages-account-settings-connections');
 Route::get('/pages/misc-error', [MiscError::class, 'index'])->name('pages-misc-error');
 Route::get('/pages/misc-under-maintenance', [MiscUnderMaintenance::class, 'index'])->name('pages-misc-under-maintenance');
 
-// authentication
 Route::get('/auth/login-basic', [LoginBasic::class, 'index'])->name('auth-login-basic');
 Route::get('/auth/register-basic', [RegisterBasic::class, 'index'])->name('auth-register-basic');
 Route::get('/auth/forgot-password-basic', [ForgotPasswordBasic::class, 'index'])->name('auth-reset-password-basic');
 
-// cards
 Route::get('/cards/basic', [CardBasic::class, 'index'])->name('cards-basic');
 
-// User Interface
 Route::get('/ui/accordion', [Accordion::class, 'index'])->name('ui-accordion');
 Route::get('/ui/alerts', [Alerts::class, 'index'])->name('ui-alerts');
 Route::get('/ui/badges', [Badges::class, 'index'])->name('ui-badges');
@@ -124,47 +124,30 @@ Route::get('/ui/toasts', [Toasts::class, 'index'])->name('ui-toasts');
 Route::get('/ui/tooltips-popovers', [TooltipsPopovers::class, 'index'])->name('ui-tooltips-popovers');
 Route::get('/ui/typography', [Typography::class, 'index'])->name('ui-typography');
 
-// extended ui
 Route::get('/extended/ui-perfect-scrollbar', [PerfectScrollbar::class, 'index'])->name('extended-ui-perfect-scrollbar');
 Route::get('/extended/ui-text-divider', [TextDivider::class, 'index'])->name('extended-ui-text-divider');
 
-// icons
 Route::get('/icons/icons-mdi', [MdiIcons::class, 'index'])->name('icons-mdi');
 
-// form elements
 Route::get('/forms/basic-inputs', [BasicInput::class, 'index'])->name('forms-basic-inputs');
 Route::get('/forms/input-groups', [InputGroups::class, 'index'])->name('forms-input-groups');
 
-// form layouts
 Route::get('/form/layouts-vertical', [VerticalForm::class, 'index'])->name('form-layouts-vertical');
 Route::get('/form/layouts-horizontal', [HorizontalForm::class, 'index'])->name('form-layouts-horizontal');
 
-// tables
 Route::get('/tables/basic', [TablesBasic::class, 'index'])->name('tables-basic');
 
+// ─── Public Landing Page BPR ─────────────────────────────────────────────────
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
 Route::get('/articles', [UserArticleController::class, 'index'])->name('user.article.articles');
 Route::get('/articles/detail/{slug}', [UserArticleController::class, 'detail'])->name('user.article.detail');
 
 Route::get('/layanan', [LayananController::class, 'index'])->name('user.layanan.layanans');
 Route::get('/layanan/detail/{slug}', [LayananController::class, 'detail'])->name('user.layanan.detail');
 
-Route::get('/about', function () {
-    return view('user.page.about');
-})->name('about');
+Route::get('/kontak', [UserContactController::class, 'index'])->name('contact');
+Route::post('/kontak', [UserContactController::class, 'store'])->name('contact.send');
 
-Route::get('/contact', function () {
-    return view('user.page.contact');
-})->name('contact');
-
-Route::get('/element', function () {
-    return view('user.page.element');
-})->name('element');
-
-Route::get('/portofolio', function () {
-    return view('user.page.portofolio');
-})->name('portofolio'); 
-
-Route::get('/single', function () {
-    return view('user.page.single');
-})->name('single');
+Route::get('/tentang-kami', [AboutController::class, 'index'])->name('about');
+Route::get('/kebijakan-privasi', [PrivacyController::class, 'index'])->name('privacy');

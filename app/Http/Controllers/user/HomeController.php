@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\User;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\Article;
 use App\Models\Benefit;
 use App\Models\HeroBanner;
 use App\Models\Product;
 use App\Models\Testimonial;
-use Illuminate\Http\Request;
+use App\Models\InterestRate;
+use App\Models\Faq;
 
 class HomeController extends Controller
 {
@@ -18,12 +20,17 @@ class HomeController extends Controller
         $dataTestimonial = Testimonial::where('is_active', true)->get();
         $dataHeroBanner = HeroBanner::where('is_active', true)->orderBy('order', 'asc')->get();
         $databenefit = Benefit::where('is_active', true)->get();
+        $interestRates = InterestRate::where('is_active', true)->get();
+        $faqs = Faq::where('is_active', true)->get();
+
         return view('user.page.index', [
-            'dataArticle' => $dataArticle,
-            'dataProduk' => $dataProduct,
-            'dataTestimonial' => $dataTestimonial,
+            'dataProduk'     => $dataProduct,
+            'dataArticle'    => $dataArticle,
+            'dataTestimonial'=> $dataTestimonial,
             'dataHeroBanner' => $dataHeroBanner,
-            'databenefit' => $databenefit
+            'databenefit'    => $databenefit,
+            'interestRates'  => $interestRates,
+            'faqs'           => $faqs,
         ]);
     }
 }

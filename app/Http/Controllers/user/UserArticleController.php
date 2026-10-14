@@ -10,31 +10,23 @@ class UserArticleController extends Controller
 {
     public function index()
     {
-        $dataArticle = Article::all();
-
-        return view('user.page.articles', [
-            'dataArticle' => $dataArticle,
-        ]);
+        // Hanya mengambil artikel yang sudah dipublikasikan
+        $dataArticle = Article::where('is_published', true)->latest()->paginate(9);
+        return view('user.page.articles', compact('dataArticle'));
     }
 
     public function detail($slug)
     {
-        $article = Article::where('slug', $slug)->firstOrFail();
-        $dataArticle = Article::where('category', $article->category)
-            ->where('id', '!=', $article->id)
-            ->take(2)
+        $article = Article::where('slug', $slug)
+            ->where('is_published', true)
+            ->firstOrFail();
+
+        $relatedArticles = Article::where('id', '!=', $article->id)
+            ->where('is_published', true)
+            ->latest()
+            ->take(3)
             ->get();
 
-        if ($dataArticle->isEmpty()) {
-            $dataArticle = Article::where('id', '!=', $article->id)
-                ->latest()
-                ->take(2)
-                ->get();
-        }
-
-        return view('user.page.single', [
-            'article' => $article,
-            'dataArticle' => $dataArticle,
-        ]);
+        return view('user.page.single', compact('article', 'relatedArticles'));
     }
 }
