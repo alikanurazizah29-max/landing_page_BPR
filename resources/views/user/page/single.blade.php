@@ -43,8 +43,8 @@
                 <div class="col-lg-3 mb-5 mb-lg-0 order-lg-3">
                     <div class="row">
 
-                        @if ($dataArticle->isNotEmpty())
-                            @foreach ($dataArticle as $item)
+                        @if ($relatedArticles6->isNotEmpty())
+                            @foreach ($relatedArticles6 as $item)
                                 <div class="col-12 mb-4">
                                     <div class="blog_entry shadow-sm rounded overflow-hidden">
                                         <a href="{{ route('user.article.detail', ['slug' => $item->slug]) }}">
