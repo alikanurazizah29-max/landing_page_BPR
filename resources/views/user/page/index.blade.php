@@ -2,30 +2,104 @@
 @section('title', ($companyProfile->company_name ?? 'BPR') . ' | Beranda - Simpanan & Kredit Terpercaya')
 
 @section('content')
-    <!-- 1. Hero Banner Utama -->
-    <div class="hero-slant overlay" data-stellar-background-ratio="0.5"
-        style="background-image: url(&quot;{{ asset('user/images/hero-min.jpg') }}&quot;)">
+    <!-- 1. Hero Banner Utama (Pilihan A: Banner Resmi BPR + Promo Slider) -->
+    @if (isset($dataHeroBanner) && $dataHeroBanner->count() > 0)
+        <div class="hero-slider owl-single owl-carousel dots-absolute no-nav">
+            <!-- Slide 1: Banner Resmi BPR -->
+            <div class="hero-slant overlay"
+                style="background-image: url('{{ asset('user/images/hero-min.jpg') }}'); background-size: cover; background-position: center;">
+                <div class="container">
+                    <div class="row align-items-center justify-content-between">
+                        <div class="col-lg-8 intro">
+                            <span class="badge badge-primary px-3 py-2 mb-3 text-uppercase font-weight-bold"
+                                style="letter-spacing: 1px; font-size: 0.75rem;">
+                                {{ $companyProfile->company_name ?? 'Bank Perekonomian Rakyat' }}
+                            </span>
+                            <h1 class="text-white font-weight-bold mb-4" style="font-size: 2.6rem; line-height: 1.25;">
+                                {{ $companyProfile->headline ?? 'Mitra Keuangan Terpercaya Untuk Pertumbuhan Usaha Anda' }}
+                            </h1>
+                            <p class="text-white mb-4" style="font-size: 1.1rem; opacity: 0.95; line-height: 1.6;">
+                                {{ $companyProfile->subheadline ?? 'Wujudkan rencana finansial bersama kami melalui layanan tabungan aman, deposito bunga kompetitif, dan pembiayaan kredit UMKM.' }}
+                            </p>
+                            <div>
+                                <a href="{{ route('contact') }}"
+                                    class="btn btn-primary mr-2 mb-2 font-weight-bold shadow">Ajukan Pinjaman</a>
+                                <a href="{{ route('user.layanan.layanans') }}" class="btn btn-outline-white mb-2">Lihat
+                                    Produk Kami</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        <div class="container">
-            <div class="row align-items-center justify-content-between">
-                <div class="col-lg-7 intro">
-                    <h1 class="text-white font-weight-bold mb-4" data-aos="fade-up" data-aos-delay="0">
-                        {{ $companyProfile->headline ?? 'Mitra Keuangan Terpercaya Untuk Pertumbuhan Usaha Anda' }}
-                    </h1>
-                    <p class="text-white mb-4" data-aos="fade-up" data-aos-delay="100">
-                        {{ $companyProfile->subheadline ?? 'Wujudkan rencana finansial bersama kami melalui layanan tabungan aman, deposito bunga kompetitif, dan pembiayaan kredit UMKM.' }}
-                    </p>
-                    <div data-aos="fade-up" data-aos-delay="200">
-                        <a href="{{ route('contact') }}" class="btn btn-primary mr-2 mb-2 font-weight-bold">Ajukan
-                            Pinjaman</a>
-                        <a href="{{ route('user.layanan.layanans') }}" class="btn btn-outline-white mb-2">Lihat Produk
-                            Kami</a>
+            <!-- Slide 2, 3, dst: Promo & Program Hero Banner dari Admin -->
+            @foreach ($dataHeroBanner as $banner)
+                <div class="hero-slant overlay"
+                    style="background-image: url('{{ asset('storage/' . $banner->image_path) }}'); background-size: cover; background-position: center;">
+                    <div class="container">
+                        <div class="row align-items-center justify-content-between">
+                            <div class="col-lg-8 intro">
+                                <span class="badge badge-warning px-3 py-2 mb-3 text-uppercase font-weight-bold text-dark"
+                                    style="letter-spacing: 1px; font-size: 0.75rem;">
+                                    Program &amp; Promo
+                                </span>
+                                <h1 class="text-white font-weight-bold mb-4" style="font-size: 2.6rem; line-height: 1.25;">
+                                    {{ $banner->title }}
+                                </h1>
+                                @if ($banner->subtitle)
+                                    <p class="text-white mb-4" style="font-size: 1.1rem; opacity: 0.95; line-height: 1.6;">
+                                        {{ $banner->subtitle }}
+                                    </p>
+                                @endif
+                                <div>
+                                    @if ($banner->button_text && $banner->button_url)
+                                        <a href="{{ $banner->button_url }}"
+                                            class="btn btn-primary mr-2 mb-2 font-weight-bold shadow">
+                                            {{ $banner->button_text }}
+                                        </a>
+                                    @else
+                                        <a href="{{ route('contact') }}"
+                                            class="btn btn-primary mr-2 mb-2 font-weight-bold shadow">
+                                            Ajukan Pinjaman
+                                        </a>
+                                    @endif
+                                    <a href="{{ route('user.layanan.layanans') }}" class="btn btn-outline-white mb-2">Lihat
+                                        Produk Kami</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    @else
+        <!-- Hero Default (Jika Belum Ada Banner Tambahan di Admin) -->
+        <div class="hero-slant overlay"
+            style="background-image: url('{{ asset('user/images/hero-min.jpg') }}'); background-size: cover; background-position: center;">
+            <div class="container">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col-lg-8 intro">
+                        <span class="badge badge-primary px-3 py-2 mb-3 text-uppercase font-weight-bold"
+                            style="letter-spacing: 1px; font-size: 0.75rem;">
+                            {{ $companyProfile->company_name ?? 'Bank Perekonomian Rakyat' }}
+                        </span>
+                        <h1 class="text-white font-weight-bold mb-4" style="font-size: 2.6rem; line-height: 1.25;">
+                            {{ $companyProfile->headline ?? 'Mitra Keuangan Terpercaya Untuk Pertumbuhan Usaha Anda' }}
+                        </h1>
+                        <p class="text-white mb-4" style="font-size: 1.1rem; opacity: 0.95; line-height: 1.6;">
+                            {{ $companyProfile->subheadline ?? 'Wujudkan rencana finansial bersama kami melalui layanan tabungan aman, deposito bunga kompetitif, dan pembiayaan kredit UMKM.' }}
+                        </p>
+                        <div>
+                            <a href="{{ route('contact') }}"
+                                class="btn btn-primary mr-2 mb-2 font-weight-bold shadow">Ajukan Pinjaman</a>
+                            <a href="{{ route('user.layanan.layanans') }}" class="btn btn-outline-white mb-2">Lihat Produk
+                                Kami</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-    </div>
+    @endif
 
     <!-- 2. Logo Kepatuhan & Regulator Resmi -->
     <div class="py-4 bg-light border-bottom">
@@ -99,9 +173,11 @@
                             <div class="card-body py-5 d-flex flex-column justify-content-center">
                                 <div class="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4 shadow"
                                     style="width: 60px; height: 60px; background-color: #8C1818; color: white;">
-                                    <span class="{{ $benefit->icon ?? 'feather-shield' }}" style="font-size: 26px;"></span>
+                                    <span class="{{ $benefit->icon ?? 'feather-shield' }}"
+                                        style="font-size: 26px;"></span>
                                 </div>
-                                <h5 class="card-title font-weight-bold" style="color: #8C1818;">{{ $benefit->title }}</h5>
+                                <h5 class="card-title font-weight-bold" style="color: #8C1818;">{{ $benefit->title }}
+                                </h5>
                                 <p class="card-text text-muted small mt-2 mb-0">{{ $benefit->description }}</p>
                             </div>
                         </div>
@@ -356,7 +432,11 @@
                                             <small
                                                 class="text-muted">{{ $testimonials->profession ?? 'Nasabah Setia' }}</small>
                                             <div class="rating text-warning mt-1">
-                                                &#9733; &#9733; &#9733; &#9733; &#9733;
+                                                @for ($i = 1; $i <= 5; $i++)
+                                                    {!! $i <= ($testimonials->rating ?? 5)
+                                                        ? '&#9733;'
+                                                        : '<span class="text-muted" style="opacity: 0.3;">&#9733;</span>' !!}
+                                                @endfor
                                             </div>
                                         </div>
                                     </div>
@@ -371,6 +451,71 @@
             </div>
         </div>
     </div>
+
+    <!-- 8. Pertanyaan yang Sering Diajukan (FAQ) -->
+    @if (isset($faqs) && $faqs->count() > 0)
+        <div class="site-section bg-light py-5" id="faq-section">
+            <div class="container">
+                <div class="row justify-content-center text-center mb-5" data-aos="fade-up">
+                    <div class="col-lg-8">
+                        <span class="sub-title text-primary font-weight-bold text-uppercase"
+                            style="letter-spacing: 2px;">Bantuan &amp; Informasi</span>
+                        <h2 class="heading font-weight-bold text-dark mt-2">Pertanyaan yang Sering Diajukan (FAQ)</h2>
+                        <p class="text-muted">Temukan jawaban cepat seputar pembukaan rekening tabungan, deposito, pinjaman
+                            kredit UMKM, dan keamanan penjaminan LPS.</p>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-9" data-aos="fade-up" data-aos-delay="100">
+                        <div class="faq-wrapper" id="accordion_faq">
+                            @foreach ($faqs as $faq)
+                                <div class="card border-0 shadow-sm mb-3 rounded-lg overflow-hidden faq-card">
+                                    <div class="card-header bg-white p-0 border-0" id="headingFaq{{ $faq->id }}">
+                                        <button
+                                            class="btn btn-block text-left p-4 d-flex justify-content-between align-items-center faq-toggle {{ $loop->first ? '' : 'collapsed' }}"
+                                            type="button" data-toggle="collapse"
+                                            data-target="#collapseFaq{{ $faq->id }}"
+                                            aria-expanded="{{ $loop->first ? 'true' : 'false' }}"
+                                            aria-controls="collapseFaq{{ $faq->id }}">
+                                            <span class="font-weight-bold text-dark d-flex align-items-center pr-3"
+                                                style="font-size: 1.05rem;">
+                                                <i class="feather-help-circle text-primary mr-3"
+                                                    style="font-size: 20px;"></i>
+                                                {{ $faq->question }}
+                                            </span>
+                                            <span
+                                                class="faq-icon d-flex align-items-center justify-content-center rounded-circle bg-light text-primary"
+                                                style="width: 32px; height: 32px; min-width: 32px;">
+                                                <i class="feather-chevron-down" style="font-size: 18px;"></i>
+                                            </span>
+                                        </button>
+                                    </div>
+
+                                    <div id="collapseFaq{{ $faq->id }}"
+                                        class="collapse {{ $loop->first ? 'show' : '' }}"
+                                        aria-labelledby="headingFaq{{ $faq->id }}" data-parent="#accordion_faq">
+                                        <div class="card-body px-4 pb-4 pt-0 faq-answer">
+                                            {!! nl2br(e($faq->answer)) !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <!-- Bantuan Lebih Lanjut -->
+                        <div class="text-center mt-4">
+                            <p class="text-muted small mb-2">Masih memiliki pertanyaan lain yang belum terjawab?</p>
+                            <a href="{{ route('contact') }}"
+                                class="btn btn-outline-primary btn-sm font-weight-bold px-4 py-2">
+                                <i class="feather-message-circle mr-1"></i> Hubungi Petugas Layanan Kami
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 
     <!-- Script Perhitungan Simulasi Deposito -->
     <script>

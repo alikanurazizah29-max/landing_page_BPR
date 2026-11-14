@@ -29,6 +29,11 @@ class LayananController extends Controller
             })
             ->firstOrFail();
 
-        return view('user.page.produk', compact('produk'));
+        $otherProducts = Product::where('is_active', true)
+            ->where('id', '!=', $produk->id)
+            ->take(3)
+            ->get();
+
+        return view('user.page.produk', compact('produk', 'otherProducts'));
     }
 }

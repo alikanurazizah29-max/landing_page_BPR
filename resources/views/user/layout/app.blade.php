@@ -27,6 +27,7 @@
   <link rel="stylesheet" href="{{ asset('user/css/aos.css') }}">
   <link rel="stylesheet" href="{{ asset('user/css/style.css') }}">
   <link rel="stylesheet" href="{{ asset('user/css/custom.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/faq.css') }}">
 
   <title>@yield('title', 'BPR | Home')</title>
 </head>
@@ -36,6 +37,22 @@
     @yield('content')
 
     @include('user.layout.footer')
+
+    @php
+        $rawWa = $companyProfile->whatsapp ?? null;
+        $cleanWa = $rawWa ? preg_replace('/[^0-9]/', '', $rawWa) : null;
+        if ($cleanWa && str_starts_with($cleanWa, '0')) {
+            $cleanWa = '62' . substr($cleanWa, 1);
+        }
+    @endphp
+    @if ($cleanWa)
+        <a href="https://api.whatsapp.com/send?phone={{ $cleanWa }}&text={{ urlencode('Halo ' . ($companyProfile->company_name ?? 'BPR') . ', saya ingin konsultasi produk dan layanan.') }}"
+            target="_blank" rel="noopener noreferrer" class="floating-wa-btn shadow-lg"
+            title="Chat WhatsApp Resmi">
+            <span class="icon-whatsapp"></span>
+            <span class="floating-wa-text font-weight-bold d-none d-md-inline-block ml-2">Chat WhatsApp</span>
+        </a>
+    @endif
 
   <script src="{{ asset('user/js/jquery-3.5.1.min.js') }}"></script>
   <script src="{{ asset('user/js/jquery-migrate-3.0.0.min.js') }}"></script>
