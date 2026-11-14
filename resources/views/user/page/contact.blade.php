@@ -1,6 +1,5 @@
 @extends('user.layout.app')
-@section('title', 'Hubungi Kami | BPR')
-
+@section('title', 'Hubungi Kami | ' . ($companyProfile->company_name ?? 'BPR'))
 @section('content')
 
     <!-- 1. Hero Section Kontak -->

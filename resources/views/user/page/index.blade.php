@@ -10,7 +10,7 @@
             <div class="row align-items-center justify-content-between">
                 <div class="col-lg-7 intro">
                     <h1 class="text-white font-weight-bold mb-4" data-aos="fade-up" data-aos-delay="0">
-                        Mitra Keuangan Terpercaya Untuk Pertumbuhan Usaha Anda
+                        {{ $companyProfile->headline ?? 'Mitra Keuangan Terpercaya Untuk Pertumbuhan Usaha Anda' }}
                     </h1>
                     <p class="text-white mb-4" data-aos="fade-up" data-aos-delay="100">
                         {{ $companyProfile->subheadline ?? 'Wujudkan rencana finansial bersama kami melalui layanan tabungan aman, deposito bunga kompetitif, dan pembiayaan kredit UMKM.' }}
@@ -25,7 +25,6 @@
             </div>
         </div>
 
-        <div class="slant" style="background-image: url(&quot;{{ asset('user/images/slant.svg') }}&quot;);"></div>
     </div>
 
     <!-- 2. Logo Kepatuhan & Regulator Resmi -->

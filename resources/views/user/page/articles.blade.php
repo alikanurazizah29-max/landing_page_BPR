@@ -1,5 +1,5 @@
 @extends('user.layout.app')
-@section('title', 'BPR | Home')
+@section('title', 'Artikel | ' . ($companyProfile->company_name ?? 'BPR'))
 @section('content')
 
     <div class="hero-slant overlay" data-stellar-background-ratio="0.5"
@@ -17,7 +17,6 @@
             </div>
         </div>
 
-        <div class="slant" style="background-image: url(&quot;{{ asset('user/images/slant.svg') }}&quot;);"></div>
     </div>
 
     <div class="site-section" id="portfolio-section">

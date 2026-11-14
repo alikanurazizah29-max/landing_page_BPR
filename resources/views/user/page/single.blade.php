@@ -16,8 +16,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="slant" style="background-image: url(&quot;{{ asset('user/images/slant.svg') }}&quot;);"></div>
     </div>
 
     <div class="site-section">
@@ -43,8 +41,8 @@
                 <div class="col-lg-3 mb-5 mb-lg-0 order-lg-3">
                     <div class="row">
 
-                        @if ($relatedArticles6->isNotEmpty())
-                            @foreach ($relatedArticles6 as $item)
+                        @if ($relatedArticles->isNotEmpty())
+                            @foreach ($relatedArticles as $item)
                                 <div class="col-12 mb-4">
                                     <div class="blog_entry shadow-sm rounded overflow-hidden">
                                         <a href="{{ route('user.article.detail', ['slug' => $item->slug]) }}">

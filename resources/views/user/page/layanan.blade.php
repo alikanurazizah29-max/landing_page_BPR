@@ -1,6 +1,5 @@
 @extends('user.layout.app')
-@section('title', 'Layanan & Produk | BPR')
-
+@section('title', 'Layanan & Produk | ' . ($companyProfile->company_name ?? 'BPR'))
 @section('content')
 
     <!-- Hero Banner -->
@@ -20,7 +19,6 @@
             </div>
         </div>
 
-        <div class="slant" style="background-image: url(&quot;{{ asset('user/images/slant.svg') }}&quot;);"></div>
     </div>
 
     <!-- Section Daftar Produk -->
