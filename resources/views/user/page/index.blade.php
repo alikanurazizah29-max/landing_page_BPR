@@ -231,7 +231,7 @@
                                             <tr>
                                                 <td class="text-left pl-3 font-weight-bold text-dark py-1">
                                                     {{ $rate->product_type }}</td>
-                                                <td class="py-1">{{ $rate->tenor ?? '1 - 12 Bulan' }}</td>
+                                                <td class="py-1">{{ $rate->duration ?? ($rate->tenor ?? '1 - 12 Bulan') }}</td>
                                                 <td class="text-success font-weight-bold py-1">
                                                     {{ $rate->rate ?? $rate->interest_rate }}%</td>
                                                 <td class="py-1"><span class="badge badge-success"

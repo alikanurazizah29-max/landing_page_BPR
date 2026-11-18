@@ -45,8 +45,9 @@
           </div>
 
           <div class="mb-4">
-            <label for="image_path" class="form-label">File Gambar</label>
-            <input class="form-control @error('image_path') is-invalid @enderror" type="file" id="image_path" name="image_path"  />
+            <label for="image_path" class="form-label font-weight-bold">File Gambar Sampul</label>
+            <input class="form-control @error('image_path') is-invalid @enderror" type="file" id="image_path" name="image_path" accept="image/*" />
+            <div class="form-text">Maksimal ukuran: 5MB. Format: JPG, PNG, WEBP.</div>
           </div>
 
           <div class="mb-4">

@@ -21,15 +21,12 @@ class MenuServiceProvider extends ServiceProvider
 
     protected function buildSidebarData(): object
     {
-        // Selalu load template/referensi dari JSON (non-admin items)
-        $templateItems = $this->loadTemplateItems();
-
-        // Item Dashboard BPR selalu ada di atas
+        // Item Dashboard BPR selalu ada di posisi paling atas
         $dashboardItem = (object)[
             'url'   => 'admin',
             'name'  => 'Dashboard BPR',
             'icon'  => 'menu-icon tf-icons mdi mdi-home-outline',
-            'slug'  => 'admin-dashboard',
+            'slug'  => 'dashboard-analytics',
         ];
 
         $adminItems = [];
@@ -49,8 +46,14 @@ class MenuServiceProvider extends ServiceProvider
             }
         }
 
-        // Gabungkan: Dashboard + Admin menus + Template referensi
-        $allItems = array_merge([$dashboardItem], $adminItems, $templateItems);
+        // Jika user belum login atau DB belum diset, gunakan menu JSON (yang sudah bersih dari demo template)
+        if (empty($adminItems)) {
+            $jsonItems = $this->loadMenuJson();
+            return (object)['menu' => $jsonItems];
+        }
+
+        // Gabungkan: Dashboard BPR + Menu Admin BPR
+        $allItems = array_merge([$dashboardItem], $adminItems);
 
         return (object)['menu' => $allItems];
     }
@@ -69,8 +72,9 @@ class MenuServiceProvider extends ServiceProvider
             ->orderBy('id')
             ->get();
 
-        $items    = [];
-        $hasItems = false;
+        $items              = [];
+        $hasMasterHeader    = false;
+        $hasManajemenHeader = false;
 
         foreach ($parents as $parent) {
             // ── Case 1: Root menu DENGAN path (direct link, bukan dropdown) ──
@@ -84,7 +88,6 @@ class MenuServiceProvider extends ServiceProvider
                         : 'menu-icon tf-icons mdi mdi-circle-outline',
                     'slug' => str_replace('/', '.', $path),
                 ];
-                $hasItems = true;
                 continue;
             }
 
@@ -96,6 +99,15 @@ class MenuServiceProvider extends ServiceProvider
                 ->get();
 
             if ($children->isEmpty()) continue;
+
+            // Section Header pemisah rapi
+            if ($parent->name === 'Master Data' && !$hasMasterHeader) {
+                $items[] = (object)['menuHeader' => 'Master Data'];
+                $hasMasterHeader = true;
+            } elseif ($parent->name !== 'Master Data' && !$hasManajemenHeader) {
+                $items[] = (object)['menuHeader' => 'Manajemen Data'];
+                $hasManajemenHeader = true;
+            }
 
             // Bangun submenu
             $submenu = $children->map(function ($child) {
@@ -114,97 +126,20 @@ class MenuServiceProvider extends ServiceProvider
                     : 'menu-icon tf-icons mdi mdi-circle-outline',
                 'submenu' => $submenu,
             ];
-
-            $hasItems = true;
-        }
-
-        // Tambah section header di atas jika ada item
-        if ($hasItems) {
-            array_unshift($items, (object)['menuHeader' => 'MANAJEMEN']);
         }
 
         return $items;
     }
 
     /**
-     * Ambil item non-admin dari JSON (template referensi).
-     * Item yang URL-nya dimulai dengan "admin/" diabaikan karena sudah diurus DB.
+     * Ambil struktur menu bersih dari JSON jika DB kosong / unauthenticated
      */
-    protected function loadTemplateItems(): array
+    protected function loadMenuJson(): array
     {
         $jsonPath = base_path('resources/menu/verticalMenu.json');
         if (!file_exists($jsonPath)) return [];
 
         $data = json_decode(file_get_contents($jsonPath));
-        if (!isset($data->menu)) return [];
-
-        return $this->filterTemplateOnly($data->menu);
-    }
-
-    /**
-     * Rekursif: ambil hanya item yang BUKAN admin/* (template/referensi).
-     */
-    protected function filterTemplateOnly(array $items): array
-    {
-        $result = [];
-
-        foreach ($items as $item) {
-            // Header section — pertahankan dulu, bersihkan yatim di akhir
-            if (isset($item->menuHeader)) {
-                $result[] = $item;
-                continue;
-            }
-
-            // Item dengan submenu — filter rekursif
-            if (isset($item->submenu)) {
-                $filtered = $this->filterTemplateOnly($item->submenu);
-                if (!empty($filtered)) {
-                    $item->submenu = $filtered;
-                    $result[] = $item;
-                }
-                continue;
-            }
-
-            // Item dengan URL
-            if (isset($item->url)) {
-                $path = ltrim($item->url, '/');
-                // Tampilkan hanya jika BUKAN admin/* (referensi template)
-                if ($path !== 'admin' && !str_starts_with($path, 'admin/')) {
-                    $result[] = $item;
-                }
-                continue;
-            }
-
-            $result[] = $item;
-        }
-
-        return $this->removeOrphanHeaders($result);
-    }
-
-    /**
-     * Hapus menuHeader yang tidak diikuti item apapun.
-     */
-    protected function removeOrphanHeaders(array $items): array
-    {
-        $result = [];
-        $count  = count($items);
-
-        for ($i = 0; $i < $count; $i++) {
-            $current = $items[$i];
-
-            if (isset($current->menuHeader)) {
-                $hasContent = false;
-                for ($j = $i + 1; $j < $count; $j++) {
-                    if (isset($items[$j]->menuHeader)) break;
-                    $hasContent = true;
-                    break;
-                }
-                if ($hasContent) $result[] = $current;
-            } else {
-                $result[] = $current;
-            }
-        }
-
-        return $result;
+        return $data->menu ?? [];
     }
 }

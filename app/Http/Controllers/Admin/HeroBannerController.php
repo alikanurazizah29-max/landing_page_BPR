@@ -30,11 +30,15 @@ class HeroBannerController extends Controller
             $validated = $request->validate([
                 'title' => 'required|string|max:255',
                 'subtitle' => 'nullable|string|max:255',
-                'image_path' => 'nullable|image|max:1024',
+                'image_path' => 'required|image|mimes:jpeg,png,jpg,webp|max:5120',
                 'button_text' => 'nullable|string|max:255',
                 'button_url' => 'nullable|string',
                 'order' => 'required|integer',
                 'is_active' => 'nullable'
+            ], [
+                'image_path.required' => 'File gambar banner wajib diunggah.',
+                'image_path.max' => 'Ukuran gambar tidak boleh lebih dari 5MB.',
+                'image_path.image' => 'File harus berupa gambar (JPG, PNG, WEBP).'
             ]);
             
             if ($request->hasFile('image_path')) {
@@ -70,11 +74,14 @@ class HeroBannerController extends Controller
             $validated = $request->validate([
                 'title' => 'required|string|max:255',
                 'subtitle' => 'nullable|string|max:255',
-                'image_path' => 'nullable|image|max:1024',
+                'image_path' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
                 'button_text' => 'nullable|string|max:255',
                 'button_url' => 'nullable|string',
                 'order' => 'required|integer',
                 'is_active' => 'nullable'
+            ], [
+                'image_path.max' => 'Ukuran gambar tidak boleh lebih dari 5MB.',
+                'image_path.image' => 'File harus berupa gambar (JPG, PNG, WEBP).'
             ]);
             
             if ($request->hasFile('image_path')) {

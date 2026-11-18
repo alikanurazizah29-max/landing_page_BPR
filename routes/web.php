@@ -71,6 +71,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'rbac'])->group(func
     Route::resource('hero-banners', \App\Http\Controllers\Admin\HeroBannerController::class)->except(['show']);
     Route::resource('articles', \App\Http\Controllers\Admin\ArticleController::class)->except(['show']);
     Route::resource('contact-messages', \App\Http\Controllers\Admin\ContactMessageController::class)->except(['show']);
+    Route::patch('contact-messages/{contact_message}/status', [\App\Http\Controllers\Admin\ContactMessageController::class, 'updateStatus'])->name('contact-messages.update-status');
     Route::resource('testimonials', \App\Http\Controllers\Admin\TestimonialController::class)->except(['show']);
     Route::resource('faqs', \App\Http\Controllers\Admin\FaqController::class)->except(['show']);
 

@@ -86,6 +86,24 @@ class ContactMessageController extends Controller
         }
     }
 
+    public function updateStatus(Request $request, ContactMessage $contactMessage)
+    {
+        try {
+            $validated = $request->validate([
+                'status' => 'required|in:unread,read,followed_up'
+            ]);
+
+            $contactMessage->update(['status' => $validated['status']]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Status pesan berhasil diubah.'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Gagal mengubah status', 'message' => $e->getMessage()], 500);
+        }
+    }
+
     public function destroy(ContactMessage $contactMessage)
     {
         try {

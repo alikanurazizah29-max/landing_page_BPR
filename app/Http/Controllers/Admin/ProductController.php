@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Product;
 
 class ProductController extends Controller
@@ -31,7 +32,7 @@ class ProductController extends Controller
                 'title' => 'required|string|max:255',
                 'slug' => 'nullable|string|max:255|unique:products,slug',
                 'icon' => 'nullable|string|max:255',
-                'image' => 'nullable|image|max:2048',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
                 'description' => 'required|string',
                 'is_active' => 'nullable'
             ]);
@@ -76,7 +77,7 @@ class ProductController extends Controller
                 'title' => 'required|string|max:255',
                 'slug' => 'nullable|string|max:255|unique:products,slug,' . $product->id,
                 'icon' => 'nullable|string|max:255',
-                'image' => 'nullable|image|max:2048',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
                 'description' => 'required|string',
                 'is_active' => 'nullable'
             ]);
@@ -88,6 +89,10 @@ class ProductController extends Controller
                 $validated['type'] = $product->type ?? 'tabungan';
             }
             if ($request->hasFile('image')) {
+                // Hapus file gambar lama jika ada
+                if ($product->image && Storage::disk('public')->exists($product->image)) {
+                    Storage::disk('public')->delete($product->image);
+                }
                 $validated['image'] = $request->file('image')->store('uploads/products', 'public');
             }
             $validated['is_active'] = $request->has('is_active') ? 1 : 0;
@@ -111,6 +116,10 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         try {
+            // Hapus file fisik gambar jika ada
+            if ($product->image && Storage::disk('public')->exists($product->image)) {
+                Storage::disk('public')->delete($product->image);
+            }
             $product->delete();
             return response()->json([
                 'success' => true, 

@@ -26,8 +26,9 @@
           </div>
 
           <div class="mb-4">
-            <label for="image_path" class="form-label">File Gambar</label>
-            <input class="form-control @error('image_path') is-invalid @enderror" type="file" id="image_path" name="image_path"  />
+            <label for="image_path" class="form-label font-weight-bold">File Gambar Banner <span class="text-danger">*</span></label>
+            <input class="form-control @error('image_path') is-invalid @enderror" type="file" id="image_path" name="image_path" accept="image/*" required />
+            <div class="form-text">Format didukung: JPG, PNG, WEBP. Maksimal ukuran: 5MB. Disarankan rasio lanskap 16:9.</div>
           </div>
 
           <div class="form-floating form-floating-outline mb-4">

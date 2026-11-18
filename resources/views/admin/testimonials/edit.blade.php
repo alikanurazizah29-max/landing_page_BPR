@@ -22,6 +22,11 @@
           </div>
 
           <div class="form-floating form-floating-outline mb-4">
+            <input type="text" class="form-control @error('profession') is-invalid @enderror" id="profession" name="profession" value="{{ $testimonial->profession }}" placeholder="Profesi / Pekerjaan (cth: Pengusaha Kuliner)" />
+            <label for="profession">Profesi / Usaha Nasabah (Opsional)</label>
+          </div>
+
+          <div class="form-floating form-floating-outline mb-4">
             <textarea class="form-control h-px-100 @error('content') is-invalid @enderror" id="content" name="content" placeholder="Isi Testimoni..." required>{{ $testimonial->content }}</textarea>
             <label for="content">Isi Testimoni</label>
           </div>

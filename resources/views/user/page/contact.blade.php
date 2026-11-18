@@ -230,9 +230,15 @@
                                                     @endif
 
                                                     @if ($branch->whatsapp)
+                                                        @php
+                                                            $bWa = preg_replace('/[^0-9]/', '', $branch->whatsapp);
+                                                            if (str_starts_with($bWa, '0')) {
+                                                                $bWa = '62' . substr($bWa, 1);
+                                                            }
+                                                        @endphp
                                                         <div class="small mb-2">
-                                                            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $branch->whatsapp) }}"
-                                                                target="_blank" class="text-success font-weight-bold">
+                                                            <a href="https://api.whatsapp.com/send?phone={{ $bWa }}"
+                                                                target="_blank" rel="noopener noreferrer" class="text-success font-weight-bold">
                                                                 <i class="feather-message-circle mr-1"></i> WA:
                                                                 {{ $branch->whatsapp }}
                                                             </a>

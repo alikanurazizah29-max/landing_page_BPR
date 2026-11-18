@@ -29,10 +29,15 @@ class TestimonialController extends Controller
         try {
             $validated = $request->validate([
                 'customer_name' => 'required|string|max:255',
-                'content' => 'required|string',
-                'rating' => 'required|integer|min:1|max:5',
-                'image_path' => 'nullable|image|max:1024',
-                'is_active' => 'nullable'
+                'profession'    => 'nullable|string|max:255',
+                'content'       => 'required|string',
+                'rating'        => 'required|integer|min:1|max:5',
+                'image_path'    => 'nullable|image|mimes:jpeg,png,jpg,webp|max:3072',
+                'is_active'     => 'nullable'
+            ], [
+                'rating.min' => 'Rating minimal 1 bintang.',
+                'rating.max' => 'Rating maksimal 5 bintang.',
+                'image_path.max' => 'Ukuran foto maksimal 3MB.',
             ]);
             
             if ($request->hasFile('image_path')) {
@@ -67,10 +72,15 @@ class TestimonialController extends Controller
         try {
             $validated = $request->validate([
                 'customer_name' => 'required|string|max:255',
-                'content' => 'required|string',
-                'rating' => 'required|integer|min:1|max:5',
-                'image_path' => 'nullable|image|max:1024',
-                'is_active' => 'nullable'
+                'profession'    => 'nullable|string|max:255',
+                'content'       => 'required|string',
+                'rating'        => 'required|integer|min:1|max:5',
+                'image_path'    => 'nullable|image|mimes:jpeg,png,jpg,webp|max:3072',
+                'is_active'     => 'nullable'
+            ], [
+                'rating.min' => 'Rating minimal 1 bintang.',
+                'rating.max' => 'Rating maksimal 5 bintang.',
+                'image_path.max' => 'Ukuran foto maksimal 3MB.',
             ]);
             
             if ($request->hasFile('image_path')) {

@@ -30,7 +30,7 @@
           </div>
 
           <div class="form-floating form-floating-outline mb-4">
-            <input type="number" class="form-control @error('rate') is-invalid @enderror" id="rate" name="rate" value="{{ $interestRate->rate }}" placeholder="Suku Bunga (%)" required />
+            <input type="number" step="0.01" min="0" max="100" class="form-control @error('rate') is-invalid @enderror" id="rate" name="rate" value="{{ $interestRate->rate }}" placeholder="Suku Bunga (%)" required />
             <label for="rate">Suku Bunga (%)</label>
           </div>
 

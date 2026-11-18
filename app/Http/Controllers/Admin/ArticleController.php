@@ -29,12 +29,16 @@ class ArticleController extends Controller
         try {
             $validated = $request->validate([
                 'title' => 'required|string|max:255',
-                'slug' => 'required|string|max:255',
+                'slug' => 'required|string|max:255|unique:articles,slug',
                 'category' => 'nullable|string|max:255',
                 'excerpt' => 'nullable|string',
                 'content' => 'required|string',
-                'image_path' => 'nullable|image|max:1024',
+                'image_path' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
                 'is_published' => 'nullable'
+            ], [
+                'slug.unique' => 'Slug (URL) ini sudah digunakan. Silakan gunakan judul atau slug yang berbeda.',
+                'image_path.max' => 'Ukuran gambar artikel tidak boleh lebih dari 5MB.',
+                'image_path.image' => 'File harus berupa gambar (JPG, PNG, WEBP).'
             ]);
             
             if ($request->hasFile('image_path')) {
@@ -69,12 +73,16 @@ class ArticleController extends Controller
         try {
             $validated = $request->validate([
                 'title' => 'required|string|max:255',
-                'slug' => 'required|string|max:255',
+                'slug' => 'required|string|max:255|unique:articles,slug,' . $article->id,
                 'category' => 'nullable|string|max:255',
                 'excerpt' => 'nullable|string',
                 'content' => 'required|string',
-                'image_path' => 'nullable|image|max:1024',
+                'image_path' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
                 'is_published' => 'nullable'
+            ], [
+                'slug.unique' => 'Slug (URL) ini sudah digunakan. Silakan gunakan judul atau slug yang berbeda.',
+                'image_path.max' => 'Ukuran gambar artikel tidak boleh lebih dari 5MB.',
+                'image_path.image' => 'File harus berupa gambar (JPG, PNG, WEBP).'
             ]);
             
             if ($request->hasFile('image_path')) {

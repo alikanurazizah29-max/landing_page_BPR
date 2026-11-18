@@ -26,6 +26,11 @@
             <label for="icon">Icon (MDI Class)</label>
           </div>
 
+          <div class="form-floating form-floating-outline mb-4">
+            <textarea class="form-control h-px-100 @error('description') is-invalid @enderror" id="description" name="description" placeholder="Deskripsi Keunggulan..." required>{{ $benefit->description }}</textarea>
+            <label for="description">Deskripsi Keunggulan</label>
+          </div>
+
           <div class="form-check form-switch mb-4">
             <input class="form-check-input" type="checkbox" id="is_active" name="is_active" value="1" {{ $benefit->is_active ? 'checked' : '' }} />
             <label class="form-check-label" for="is_active">Status Aktif</label>

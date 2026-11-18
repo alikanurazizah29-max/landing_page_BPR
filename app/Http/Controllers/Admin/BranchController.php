@@ -39,6 +39,14 @@ class BranchController extends Controller
             
             $validated['is_active'] = $request->has('is_active') ? 1 : 0;
             
+            if (!empty($validated['whatsapp'])) {
+                $cleanWa = preg_replace('/[^0-9]/', '', $validated['whatsapp']);
+                if (str_starts_with($cleanWa, '0')) {
+                    $cleanWa = '62' . substr($cleanWa, 1);
+                }
+                $validated['whatsapp'] = $cleanWa;
+            }
+            
             Branch::create($validated);
             return response()->json([
                 'success' => true, 
@@ -75,6 +83,14 @@ class BranchController extends Controller
             
             
             $validated['is_active'] = $request->has('is_active') ? 1 : 0;
+            
+            if (!empty($validated['whatsapp'])) {
+                $cleanWa = preg_replace('/[^0-9]/', '', $validated['whatsapp']);
+                if (str_starts_with($cleanWa, '0')) {
+                    $cleanWa = '62' . substr($cleanWa, 1);
+                }
+                $validated['whatsapp'] = $cleanWa;
+            }
             
             $branch->update($validated);
             return response()->json([

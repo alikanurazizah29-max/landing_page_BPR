@@ -27,12 +27,12 @@
           </div>
 
           <div class="mb-4">
-            <label for="image_path" class="form-label">File Gambar</label>
-            <input class="form-control @error('image_path') is-invalid @enderror" type="file" id="image_path" name="image_path" />
+            <label for="image_path" class="form-label font-weight-bold">File Gambar Banner</label>
+            <input class="form-control @error('image_path') is-invalid @enderror" type="file" id="image_path" name="image_path" accept="image/*" />
+            <div class="form-text">Biarkan kosong jika tidak ingin mengubah file (Maksimal: 5MB).</div>
             @if($heroBanner->image_path)
                 <div class="mt-2">
-                    <img src="{{ asset('storage/' . $heroBanner->image_path) }}" width="100" class="rounded">
-                    <small class="text-muted d-block">Biarkan kosong jika tidak ingin mengubah file.</small>
+                    <img src="{{ asset('storage/' . $heroBanner->image_path) }}" width="120" class="rounded border">
                 </div>
             @endif
           </div>

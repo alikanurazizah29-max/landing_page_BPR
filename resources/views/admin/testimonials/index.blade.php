@@ -30,7 +30,12 @@
         @foreach($testimonials as $testimonial)
         <tr>
           <td>{{ $loop->iteration }}</td>
-          <td><span class="fw-medium">{{ $testimonial->customer_name }}</span></td>
+          <td>
+            <span class="fw-medium text-dark">{{ $testimonial->customer_name }}</span>
+            @if($testimonial->profession)
+              <small class="text-muted d-block">{{ $testimonial->profession }}</small>
+            @endif
+          </td>
           <td><span class="text-warning font-weight-bold">{{ str_repeat('★', $testimonial->rating) }}</span></td>
           <td><span class="fw-medium">{{ \Illuminate\Support\Str::limit($testimonial->content, 60) }}</span></td>
           <td>
