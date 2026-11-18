@@ -2,7 +2,7 @@
 @section('title', $article->title . ' | ' . ($companyProfile->company_name ?? 'BPR'))
 @section('content')
 
-    <div class="site-section">
+    <div class="site-section" style="padding-top: 120px !important;">
         <div class="container article">
             <div class="row justify-content-between">
 
@@ -11,7 +11,7 @@
                     @if ($article->image_path)
                         <div class="mb-4">
                             <img src="{{ asset('storage/' . $article->image_path) }}" alt="{{ $article->title }}"
-                                class="img-fluid rounded w-100" style="max-height: 450px; object-fit: cover;">
+                                class="img-fluid rounded w-100" style="aspect-ratio: 16/9; object-fit: cover;">
                         </div>
                     @endif
 

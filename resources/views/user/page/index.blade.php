@@ -6,7 +6,7 @@
     @if (isset($dataHeroBanner) && $dataHeroBanner->count() > 0)
         <div class="hero-slider owl-single owl-carousel dots-absolute no-nav">
             <!-- Slide 1: Banner Resmi BPR -->
-            <div class="hero-slant overlay"
+            {{-- <div class="hero-slant overlay"
                 style="background-image: url('{{ asset('user/images/hero-min.jpg') }}'); background-size: cover; background-position: center;">
                 <div class="container">
                     <div class="row align-items-center justify-content-between">
@@ -30,7 +30,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             <!-- Slide 2, 3, dst: Promo & Program Hero Banner dari Admin -->
             @foreach ($dataHeroBanner as $banner)
@@ -39,9 +39,9 @@
                     <div class="container">
                         <div class="row align-items-center justify-content-between">
                             <div class="col-lg-8 intro">
-                                <span class="badge badge-warning px-3 py-2 mb-3 text-uppercase font-weight-bold text-dark"
+                                <span class="badge badge-primary px-3 py-2 mb-3 text-uppercase font-weight-bold"
                                     style="letter-spacing: 1px; font-size: 0.75rem;">
-                                    Program &amp; Promo
+                                    {{ $companyProfile->company_name ?? 'Bank Perekonomian Rakyat' }}
                                 </span>
                                 <h1 class="text-white font-weight-bold mb-4" style="font-size: 2.6rem; line-height: 1.25;">
                                     {{ $banner->title }}
@@ -173,8 +173,7 @@
                             <div class="card-body py-5 d-flex flex-column justify-content-center">
                                 <div class="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4 shadow"
                                     style="width: 60px; height: 60px; background-color: #8C1818; color: white;">
-                                    <span class="{{ $benefit->icon ?? 'feather-shield' }}"
-                                        style="font-size: 26px;"></span>
+                                    <span class="{{ $benefit->icon ?? 'feather-shield' }}" style="font-size: 26px;"></span>
                                 </div>
                                 <h5 class="card-title font-weight-bold" style="color: #8C1818;">{{ $benefit->title }}
                                 </h5>
