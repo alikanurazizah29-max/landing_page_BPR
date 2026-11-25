@@ -119,13 +119,26 @@
                             <div class="form-group">
                                 <label class="text-black font-weight-bold" for="product_interest">Produk yang
                                     Diminati</label>
-                                <select name="product_interest" class="form-control mb-3">
+                                <select name="product_interest" id="product_interest" class="form-control mb-3">
                                     <option value="">-- Pilih Layanan (Opsional) --</option>
-                                    <option value="Kredit UMKM / Modal Kerja">Kredit UMKM / Modal Kerja</option>
-                                    <option value="Kredit Konsumtif / Multiguna">Kredit Konsumtif / Multiguna</option>
-                                    <option value="Tabungan BPR">Tabungan BPR</option>
-                                    <option value="Deposito Berjangka">Deposito Berjangka</option>
-                                    <option value="Pengaduan Nasabah">Pengaduan Nasabah / WBS</option>
+                                    @if (isset($products) && $products->count() > 0)
+                                        <optgroup label="Produk & Layanan Resmi BPR">
+                                            @foreach ($products as $prod)
+                                                <option value="{{ $prod->title }}"
+                                                    {{ request('produk') == $prod->title || old('product_interest') == $prod->title ? 'selected' : '' }}>
+                                                    {{ $prod->title }} ({{ ucfirst($prod->type) }})
+                                                </option>
+                                            @endforeach
+                                        </optgroup>
+                                    @endif
+                                    <optgroup label="Layanan Lainnya">
+                                        <option value="Konsultasi Umum"
+                                            {{ request('produk') == 'Konsultasi Umum' || old('product_interest') == 'Konsultasi Umum' ? 'selected' : '' }}>
+                                            Konsultasi Umum</option>
+                                        <option value="Pengaduan Nasabah / WBS"
+                                            {{ request('produk') == 'Pengaduan Nasabah / WBS' || old('product_interest') == 'Pengaduan Nasabah / WBS' ? 'selected' : '' }}>
+                                            Pengaduan Nasabah / WBS</option>
+                                    </optgroup>
                                 </select>
                             </div>
 
@@ -282,11 +295,18 @@
                                                     {{ $companyProfile->phone }}</div>
                                             @endif
                                             @if ($companyProfile->whatsapp ?? false)
-                                                <div class="small"><a
-                                                        href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $companyProfile->whatsapp) }}"
-                                                        target="_blank" class="text-success font-weight-bold"><i
-                                                            class="feather-message-circle mr-1"></i> WA:
-                                                        {{ $companyProfile->whatsapp }}</a></div>
+                                                @php
+                                                    $cpWa = preg_replace('/[^0-9]/', '', $companyProfile->whatsapp);
+                                                    if (str_starts_with($cpWa, '0')) {
+                                                        $cpWa = '62' . substr($cpWa, 1);
+                                                    }
+                                                @endphp
+                                                <div class="small">
+                                                    <a href="https://api.whatsapp.com/send?phone={{ $cpWa }}"
+                                                        target="_blank" rel="noopener noreferrer" class="text-success font-weight-bold">
+                                                        <i class="feather-message-circle mr-1"></i> WA: {{ $companyProfile->whatsapp }}
+                                                    </a>
+                                                </div>
                                             @endif
                                         </div>
                                     </div>

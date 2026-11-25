@@ -89,16 +89,22 @@
 
                         <!-- Tombol Chat CS WhatsApp Langsung -->
                         @if ($companyProfile->whatsapp ?? false)
-                            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $companyProfile->whatsapp) }}?text=Halo%20{{ urlencode($companyProfile->company_name ?? 'BPR') }},%20saya%20tertarik%20dengan%20produk%20{{ urlencode($produk->title) }}.%20Mohon%20informasi%20selengkapnya."
-                                target="_blank"
+                            @php
+                                $csWa = preg_replace('/[^0-9]/', '', $companyProfile->whatsapp);
+                                if (str_starts_with($csWa, '0')) {
+                                    $csWa = '62' . substr($csWa, 1);
+                                }
+                            @endphp
+                            <a href="https://api.whatsapp.com/send?phone={{ $csWa }}&text={{ urlencode('Halo ' . ($companyProfile->company_name ?? 'BPR') . ', saya tertarik dengan produk ' . $produk->title . '. Mohon informasi selengkapnya.') }}"
+                                target="_blank" rel="noopener noreferrer"
                                 class="btn btn-success btn-block font-weight-bold py-3 mb-2 shadow-sm d-flex align-items-center justify-content-center">
                                 <span class="feather-message-circle mr-2" style="font-size: 20px;"></span> Ajukan via
                                 WhatsApp
                             </a>
                         @endif
 
-                        <!-- Tombol Formulir Hubungi Kami -->
-                        <a href="{{ route('contact') }}"
+                        <!-- Tombol Formulir Hubungi Kami (Auto-select produk di form kontak) -->
+                        <a href="{{ route('contact', ['produk' => $produk->title]) }}"
                             class="btn btn-outline-primary btn-block font-weight-bold py-2 mb-4">
                             <span class="feather-mail mr-1"></span> Kirim Pesan / Tanya CS
                         </a>

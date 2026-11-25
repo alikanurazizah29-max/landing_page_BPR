@@ -6,13 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ContactMessage;
 use App\Models\Branch;
+use App\Models\Product;
 
 class UserContactController extends Controller
 {
     public function index()
     {
         $branches = Branch::where('is_active', true)->get();
-        return view('user.page.contact', compact('branches'));
+        $products = Product::where('is_active', true)->orderBy('type', 'asc')->get();
+        return view('user.page.contact', compact('branches', 'products'));
     }
 
     public function store(Request $request)

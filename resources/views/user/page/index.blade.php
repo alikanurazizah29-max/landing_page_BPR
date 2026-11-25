@@ -5,32 +5,6 @@
     <!-- 1. Hero Banner Utama (Pilihan A: Banner Resmi BPR + Promo Slider) -->
     @if (isset($dataHeroBanner) && $dataHeroBanner->count() > 0)
         <div class="hero-slider owl-single owl-carousel dots-absolute no-nav">
-            <!-- Slide 1: Banner Resmi BPR -->
-            {{-- <div class="hero-slant overlay"
-                style="background-image: url('{{ asset('user/images/hero-min.jpg') }}'); background-size: cover; background-position: center;">
-                <div class="container">
-                    <div class="row align-items-center justify-content-between">
-                        <div class="col-lg-8 intro">
-                            <span class="badge badge-primary px-3 py-2 mb-3 text-uppercase font-weight-bold"
-                                style="letter-spacing: 1px; font-size: 0.75rem;">
-                                {{ $companyProfile->company_name ?? 'Bank Perekonomian Rakyat' }}
-                            </span>
-                            <h1 class="text-white font-weight-bold mb-4" style="font-size: 2.6rem; line-height: 1.25;">
-                                {{ $companyProfile->headline ?? 'Mitra Keuangan Terpercaya Untuk Pertumbuhan Usaha Anda' }}
-                            </h1>
-                            <p class="text-white mb-4" style="font-size: 1.1rem; opacity: 0.95; line-height: 1.6;">
-                                {{ $companyProfile->subheadline ?? 'Wujudkan rencana finansial bersama kami melalui layanan tabungan aman, deposito bunga kompetitif, dan pembiayaan kredit UMKM.' }}
-                            </p>
-                            <div>
-                                <a href="{{ route('contact') }}"
-                                    class="btn btn-primary mr-2 mb-2 font-weight-bold shadow">Ajukan Pinjaman</a>
-                                <a href="{{ route('user.layanan.layanans') }}" class="btn btn-outline-white mb-2">Lihat
-                                    Produk Kami</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
 
             <!-- Slide 2, 3, dst: Promo & Program Hero Banner dari Admin -->
             @foreach ($dataHeroBanner as $banner)
@@ -79,10 +53,7 @@
             <div class="container">
                 <div class="row align-items-center justify-content-between">
                     <div class="col-lg-8 intro">
-                        <span class="badge badge-primary px-3 py-2 mb-3 text-uppercase font-weight-bold"
-                            style="letter-spacing: 1px; font-size: 0.75rem;">
-                            {{ $companyProfile->company_name ?? 'Bank Perekonomian Rakyat' }}
-                        </span>
+
                         <h1 class="text-white font-weight-bold mb-4" style="font-size: 2.6rem; line-height: 1.25;">
                             {{ $companyProfile->headline ?? 'Mitra Keuangan Terpercaya Untuk Pertumbuhan Usaha Anda' }}
                         </h1>
@@ -230,7 +201,8 @@
                                             <tr>
                                                 <td class="text-left pl-3 font-weight-bold text-dark py-1">
                                                     {{ $rate->product_type }}</td>
-                                                <td class="py-1">{{ $rate->duration ?? ($rate->tenor ?? '1 - 12 Bulan') }}</td>
+                                                <td class="py-1">
+                                                    {{ $rate->duration ?? ($rate->tenor ?? '1 - 12 Bulan') }}</td>
                                                 <td class="text-success font-weight-bold py-1">
                                                     {{ $rate->rate ?? $rate->interest_rate }}%</td>
                                                 <td class="py-1"><span class="badge badge-success"
@@ -294,17 +266,38 @@
                                 <label class="font-weight-bold text-dark mb-1" style="font-size: 0.75rem;">Nominal
                                     Deposito (Rp)</label>
                                 <input type="number" id="nominalDeposito" class="form-control form-control-sm"
-                                    value="10000000" style="font-size: 0.85rem;">
+                                    value="10000000" style="font-size: 0.85rem;" oninput="hitungDeposito()">
                             </div>
                             <div class="col-md-4 mb-2 mb-md-0">
                                 <label class="font-weight-bold text-dark mb-1" style="font-size: 0.75rem;">Tenor
                                     (Bulan)</label>
+                                @php
+                                    $depositoRates = collect($interestRates ?? [])->filter(function ($item) {
+                                        return stripos($item->product_type, 'deposito') !== false ||
+                                            stripos($item->duration, 'bulan') !== false;
+                                    });
+                                    if ($depositoRates->isEmpty()) {
+                                        $depositoRates = collect($interestRates ?? []);
+                                    }
+                                @endphp
                                 <select id="tenorDeposito" class="form-control form-control-sm"
-                                    style="font-size: 0.85rem;">
-                                    <option value="1">1 Bulan (5.25%)</option>
-                                    <option value="3">3 Bulan (5.75%)</option>
-                                    <option value="6">6 Bulan (5.75%)</option>
-                                    <option value="12" selected>12 Bulan (6.00%)</option>
+                                    style="font-size: 0.85rem;" onchange="hitungDeposito()">
+                                    @forelse($depositoRates as $rate)
+                                        @php
+                                            preg_match('/\d+/', $rate->duration, $matches);
+                                            $tenorMonths = !empty($matches[0]) ? (int) $matches[0] : 12;
+                                            $rateValue = (float) ($rate->rate ?? ($rate->interest_rate ?? 6.0));
+                                        @endphp
+                                        <option value="{{ $tenorMonths }}" data-rate="{{ $rateValue }}"
+                                            {{ $loop->last ? 'selected' : '' }}>
+                                            {{ $rate->duration }} ({{ $rateValue }}% p.a)
+                                        </option>
+                                    @empty
+                                        <option value="1" data-rate="5.25">1 Bulan (5.25%)</option>
+                                        <option value="3" data-rate="5.75">3 Bulan (5.75%)</option>
+                                        <option value="6" data-rate="6.25">6 Bulan (6.25%)</option>
+                                        <option value="12" data-rate="6.75" selected>12 Bulan (6.75%)</option>
+                                    @endforelse
                                 </select>
                             </div>
                             <div class="col-md-3">
@@ -516,25 +509,36 @@
         </div>
     @endif
 
-    <!-- Script Perhitungan Simulasi Deposito -->
+    <!-- Script Perhitungan Simulasi Deposito (100% Dinamis dari Database) -->
     <script>
         function hitungDeposito() {
-            var nominal = parseFloat(document.getElementById('nominalDeposito').value) || 0;
+            var nominalInput = document.getElementById('nominalDeposito');
+            var nominal = parseFloat(nominalInput ? nominalInput.value : 0) || 0;
             var tenorSelect = document.getElementById('tenorDeposito');
-            var tenor = parseInt(tenorSelect.value);
 
-            var rate = 0.06; // Default 6% untuk 12 Bulan
-            if (tenor === 1) rate = 0.0525;
-            else if (tenor === 3 || tenor === 6) rate = 0.0575;
+            if (!tenorSelect) return;
+
+            var selectedOption = tenorSelect.options[tenorSelect.selectedIndex];
+            var ratePercent = selectedOption ? parseFloat(selectedOption.getAttribute('data-rate')) : 6.0;
+            if (isNaN(ratePercent)) ratePercent = 6.0;
+
+            var annualRate = ratePercent / 100;
 
             // Bunga kotor per bulan = (nominal * rate) / 12
-            // Pajak PPh atas bunga = 20% (jika nominal deposito > Rp 7.500.000)
-            var bungaKotorBulan = (nominal * rate) / 12;
+            // Pajak PPh atas bunga = 20% jika nominal deposito > Rp 7.500.000 (ketentuan resmi perbankan)
+            var bungaKotorBulan = (nominal * annualRate) / 12;
             var pajak = nominal > 7500000 ? 0.20 : 0.0;
             var bungaBersihBulan = bungaKotorBulan * (1 - pajak);
 
-            document.getElementById('bungaApresiasi').innerText = 'Rp ' + Math.round(bungaBersihBulan).toLocaleString(
-                'id-ID') + ' / bulan';
+            var hasil = document.getElementById('bungaApresiasi');
+            if (hasil) {
+                hasil.innerText = 'Rp ' + Math.round(bungaBersihBulan).toLocaleString('id-ID') + ' / bulan';
+            }
         }
+
+        // Jalankan perhitungan otomatis saat halaman selesai dimuat
+        document.addEventListener('DOMContentLoaded', function() {
+            hitungDeposito();
+        });
     </script>
 @endsection
